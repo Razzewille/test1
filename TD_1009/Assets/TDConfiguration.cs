@@ -1,34 +1,78 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 
 public class TDConfiguration
 {
 	public TDConfiguration()
 	{
-		m_playerHP             = 10;
-		m_towerDamage          = 3;
-		m_enemyHP              = 10;
-		m_killReward           = 20;
-		m_enemySpeed           = 3f;
-		m_rocketSpeed          = 6f;
-		m_towerRestoration 	   = 1f;
-		m_uberTowerRestoration = 0.1f;
+		playerHP             = 10;
+		towerDamage          = 3;
+		enemyHP              = 10;
+		killReward           = 20;
+		enemySpeed           = 3f;
+		rocketSpeed          = 6f;
+		towerRestoration 	   = 1f;
+		uberTowerRestoration = 0.1f;
+
 		readFromResource();
 	}
 
 	void readFromResource()
 	{
+		Dictionary<string, string> gameConf = getLines();
+
+		System.Type type = typeof(TDConfiguration);
+		type.GetFields();
+		FieldInfo[] fields = type.GetFields();
+		foreach (var field in fields)
+		{
+		    string name = field.Name;
+			if (!gameConf.ContainsKey(name))
+				continue;
+			
+		    object val = field.GetValue(this);
+		    if (val is uint) 
+		    {
+				field.SetValue(this, Convert.ToUInt32(gameConf[name]));
+			}
+		    else if (val is float) // See if it is a string.
+		    {
+				field.SetValue(this, Convert.ToDouble(gameConf[name]));
+			}
+		}
 	}
 
-	public uint m_playerHP;
+	public Dictionary<string, string> getLines()
+	{
+		Dictionary<string, string> dic = new Dictionary<string, string>();
+		TextAsset textFile = (TextAsset)Resources.Load("Configuration", typeof(TextAsset));
+        System.IO.StringReader textStream = new System.IO.StringReader(textFile.text);
+   		string line;
+        while ((line = textStream.ReadLine()) != null)
+		{
+			string [] aToken = line.Split(' ');
+			if (aToken.Length < 3)
+				continue;
+			foreach (string str in aToken)
+			{
+				dic[aToken[0]] = aToken[2];
+			}
+		}
+		return dic;
+	}
 
-	public uint m_towerDamage;
-	public uint m_enemyHP;
-	public uint m_killReward;
+	public uint playerHP;
 
-	public float m_enemySpeed; // units/sec
-	public float m_rocketSpeed; // units/sec
+	public uint towerDamage;
+	public uint enemyHP;
+	public uint killReward;
 
-	public float m_towerRestoration; // sec
-	public float m_uberTowerRestoration; // sec
+	public float enemySpeed; // units/sec
+	public float rocketSpeed; // units/sec
+
+	public float towerRestoration; // sec
+	public float uberTowerRestoration; // sec
 }
