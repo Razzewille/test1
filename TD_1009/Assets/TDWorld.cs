@@ -5,6 +5,7 @@ public class TDWorld : MonoBehaviour {
 
 	void Awake()
 	{
+		m_strategy = new TDTowerStrategy();
 		m_configuration = new TDConfiguration();
 		m_configuration.readFromResource();
 	}
@@ -152,6 +153,7 @@ public class TDWorld : MonoBehaviour {
 	}
 
 	public TDConfiguration m_configuration;
+	public TDTowerStrategy m_strategy;
 	TDGrid m_grid;
 
 	public GameObject m_prefabBasicEnemy;

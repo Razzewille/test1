@@ -9,6 +9,9 @@ public abstract class TDEnemy : MonoBehaviour {
 		eBoss  = 1
 	};
 
+	public delegate void EventHandler(TDEnemy enemy);
+	public event EventHandler OnEventDestroy;        		
+
 	// Use this for initialization
 	void Start () {
 		m_maxHP = m_HP = (int) getStartHP();
@@ -49,6 +52,7 @@ public abstract class TDEnemy : MonoBehaviour {
 
 	void OnDestroy()
 	{
+		OnEventDestroy(this);
 		Destroy(m_healthBar);
 	}
 
@@ -61,9 +65,9 @@ public abstract class TDEnemy : MonoBehaviour {
 
 	public abstract Type type();
 
-	protected abstract uint getStartHP();
-	protected abstract float getSpeed();
-	protected abstract Color getColor();
+	public abstract uint getStartHP();
+	public abstract float getSpeed();
+	public abstract Color getColor();
 	
 	TDGrid.Cell[] m_path;
 	

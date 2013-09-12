@@ -30,6 +30,9 @@ public abstract class TDTower : MonoBehaviour {
 			float efficientRadius = getEfficientRadius();
 		   	if (dist < efficientRadius)
 			{
+				TDEnemy enemy = TDWorld.getWorld().getTDEnemy(thisObject);
+				if (!TDWorld.getWorld().m_strategy.shouldShootAt(enemy, getTowerDamage()))
+					continue;
 				if ((recDist < 0) || (recDist > dist))
 				{
 					recDist = dist;
@@ -39,6 +42,8 @@ public abstract class TDTower : MonoBehaviour {
 		}
 		if (recObject == null)
 			return;
+		TDEnemy recEnemy = TDWorld.getWorld().getTDEnemy(recObject);
+		TDWorld.getWorld().m_strategy.shootingAt(recEnemy, getTowerDamage());
 		GameObject rocket = TDWorld.getWorld().addRocket(type(), transform.position);
 		TDRocket rocketScript = (TDRocket) rocket.GetComponent("TDRocket");
 		rocketScript.m_target = recObject;

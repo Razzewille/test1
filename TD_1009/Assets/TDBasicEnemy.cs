@@ -7,15 +7,15 @@ public class TDBasicEnemy : TDEnemy
 	{
 		return TDEnemy.Type.eBasic;
 	}
-	protected override uint getStartHP()
+	public override uint getStartHP()
 	{
 		return TDWorld.getWorld().m_configuration.enemyHP;
 	}
-	protected override float getSpeed()
+	public override float getSpeed()
 	{
 		return TDWorld.getWorld().m_configuration.enemySpeed;
 	}
-	protected override Color getColor()
+	public override Color getColor()
 	{
 		return new Color(0, 1, 1, 1);
 	}
