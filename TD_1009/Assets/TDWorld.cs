@@ -1,26 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TDWorld
-{
-	GameObject getPlayer()
+public class TDWorld : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+	
+	public static TDWorld getWorld()
 	{
-		return null;
+		GameObject [] aWorlds = GameObject.FindGameObjectsWithTag("World");
+		return (TDWorld) (aWorlds[0].GetComponent("TDWorld"));
 	}
 
-	GameObject [] getAllEnemies()
+	public GameObject [] getAllEnemies()
 	{
-		return null;
+		return GameObject.FindGameObjectsWithTag("Enemy");
 	}
 
-	GameObject [] getAllTowers()
+	public GameObject [] getAllTowers()
 	{
-		return null;
+		return GameObject.FindGameObjectsWithTag("Tower");
 	}
 
-	GameObject [] getAllObstacles()
+	public GameObject [] getAllObstacles()
 	{
-		return null;
+		return GameObject.FindGameObjectsWithTag("Obstacle");
 	}
 
 	bool start()
@@ -35,12 +46,22 @@ public class TDWorld
 		return false;
 	}
 	
-	bool addEnemy(Vector3 pos)
+	bool addEnemy(TDEnemy.Type type, Vector3 pos)
 	{
+		GameObject enemy = null;
+		switch (type)
+		{
+			case TDEnemy.Type.eBasic:
+			break;
+			case TDEnemy.Type.eBoss:
+			break;
+				
+		}
+		enemy.transform.position = pos;
 		return false;
 	}
 
-	bool addTower(Vector3 pos)
+	bool addTower(TDTower.Type type, Vector3 pos)
 	{
 		return false;
 	}
@@ -50,8 +71,13 @@ public class TDWorld
 		return false;
 	}
 
-	public static TDWorld s_world = new TDWorld();
 	public TDConfiguration m_configuration;
 	public TDPlayer m_player;
 	TDGrid m_grid;
+
+	public GameObject m_prefabBasicEnemy;
+	public GameObject m_prefabBossEnemy;
+	public GameObject m_prefabBasicTower;
+	public GameObject m_prefabUberTower;
+
 }

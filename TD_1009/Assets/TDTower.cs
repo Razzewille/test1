@@ -3,7 +3,7 @@ using System.Collections;
 
 public abstract class TDTower : MonoBehaviour {
 
-	enum Type
+	public enum Type
 	{
 		eBasic = 0,
 		eUber  = 1
