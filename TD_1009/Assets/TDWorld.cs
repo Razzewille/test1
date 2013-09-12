@@ -25,6 +25,7 @@ public class TDWorld
 
 	bool start()
 	{
+		m_configuration = new TDConfiguration();
 		m_player = new TDPlayer();
 		return true;
 	}
@@ -50,8 +51,7 @@ public class TDWorld
 	}
 
 	public static TDWorld s_world = new TDWorld();
+	public TDConfiguration m_configuration;
 	public TDPlayer m_player;
-	public static TDConfiguration m_configuration = new TDConfiguration();
-
 	TDGrid m_grid;
 }

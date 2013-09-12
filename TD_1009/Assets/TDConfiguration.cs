@@ -9,13 +9,24 @@ public class TDConfiguration
 	public TDConfiguration()
 	{
 		playerHP             = 10;
-		towerDamage          = 3;
+		
+		// Enemies
 		enemyHP              = 10;
 		killReward           = 20;
-		enemySpeed           = 3f;
-		rocketSpeed          = 6f;
-		towerRestoration 	   = 1f;
-		uberTowerRestoration = 0.1f;
+		enemySpeed           = 3.0f; // units/sec
+		
+		bossEnemyHP          = 20;
+		bossKillReward       = 30;
+		bossEnemySpeed       = 2.0f;// units/sec
+		
+		//Towers
+		towerDamage          = 3;
+		towerRocketSpeed     = 6.0f; // units/sec
+		towerRestoration 	 = 1.0f; // sec
+		
+		uberTowerDamage      = 6;
+		uberTowerRocketSpeed = 1.0f;
+		uberTowerRestoration = 0.1f; // sec
 
 		readFromResource();
 	}
@@ -61,23 +72,28 @@ public class TDConfiguration
 			string [] aToken = line.Split(' ');
 			if (aToken.Length < 3)
 				continue;
-			foreach (string str in aToken)
-			{
-				dic[aToken[0]] = aToken[2];
-			}
+			dic[aToken[0]] = aToken[2];
 		}
 		return dic;
 	}
-
+	
 	public uint playerHP;
-
-	public uint towerDamage;
+	
+	// Enemies
 	public uint enemyHP;
 	public uint killReward;
-
 	public float enemySpeed; // units/sec
-	public float rocketSpeed; // units/sec
-
+	
+	public uint bossEnemyHP;
+	public uint bossKillReward;
+	public float bossEnemySpeed;// units/sec
+	
+	//Towers
+	public uint towerDamage;
+	public float towerRocketSpeed; // units/sec
 	public float towerRestoration; // sec
+	
+	public uint uberTowerDamage;
+	public float uberTowerRocketSpeed;
 	public float uberTowerRestoration; // sec
 }

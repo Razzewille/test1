@@ -35,7 +35,7 @@ public class TDGrid
 	}
 
 	enum CellState {eFree = 0, eBusy};
-	struct Cell
+	public struct Cell
 	{
 		Cell(uint i, uint j) {m_i = i; m_j = j; pos = new Vector2();}
 		public Vector2 pos;

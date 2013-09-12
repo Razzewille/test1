@@ -9,7 +9,7 @@ public class TDPlayer
 
 	void heal(uint hp) {m_health += (int)hp;}
 
-	void damage(uint hp) {m_health -= (int)hp;}
+	void receiveDamage(uint hp) {m_health -= (int)hp;}
 
 	bool affords(uint cost) {return m_money > cost;}
 
