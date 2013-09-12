@@ -38,7 +38,7 @@ public class TDConfiguration
 		    {
 				field.SetValue(this, Convert.ToUInt32(gameConf[name]));
 			}
-		    else if (val is float) // See if it is a string.
+		    else if (val is float)
 		    {
 				field.SetValue(this, Convert.ToDouble(gameConf[name]));
 			}
@@ -53,6 +53,11 @@ public class TDConfiguration
    		string line;
         while ((line = textStream.ReadLine()) != null)
 		{
+			// Skip comment
+			if (line.Length < 2)
+				continue;
+			if (line.Contains("//"))
+				continue;
 			string [] aToken = line.Split(' ');
 			if (aToken.Length < 3)
 				continue;

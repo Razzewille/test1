@@ -9,3 +9,5 @@ enemySpeed           = 3.0 // units/sec
 rocketSpeed          = 6.0 // units/sec
 towerRestoration 	 = 1.0 // sec
 uberTowerRestoration = 0.1 // sec
+
+// Enemies
