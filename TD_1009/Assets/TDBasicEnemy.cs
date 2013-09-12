@@ -3,7 +3,10 @@ using System.Collections;
 
 public class TDBasicEnemy : TDEnemy
 {
-
+	public override TDEnemy.Type type()
+	{
+		return TDEnemy.Type.eBasic;
+	}
 	protected override uint getStartHP()
 	{
 		return TDWorld.getWorld().m_configuration.enemyHP;

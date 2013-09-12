@@ -3,7 +3,10 @@ using System.Collections;
 
 public class TDBossEnemy : TDEnemy
 {
-
+	public override TDEnemy.Type type()
+	{
+		return TDEnemy.Type.eBoss;
+	}
 	protected override uint getStartHP()
 	{
 		return TDWorld.getWorld().m_configuration.bossEnemyHP;

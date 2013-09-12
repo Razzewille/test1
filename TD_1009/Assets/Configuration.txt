@@ -16,7 +16,9 @@ bossEnemySpeed       = 2.0 // units/sec
 towerDamage          = 3
 towerRocketSpeed     = 6.0 // units/sec
 towerRestoration 	 = 1.0 // sec
+towerEfficientRadius = 30.0
 
 uberTowerDamage      = 6
 uberTowerRocketSpeed = 1.0
 uberTowerRestoration = 0.1 // sec
+uberTowerEfficientRadius = 30.0

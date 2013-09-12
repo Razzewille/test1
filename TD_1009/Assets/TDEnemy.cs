@@ -17,21 +17,32 @@ public abstract class TDEnemy : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		Vector3 dir = new Vector3(1f, 0f, 0f);
+		GameObject player = TDWorld.getWorld().getPlayer();
+		Vector3 dir = player.transform.position - gameObject.transform.position;
+		if (dir.magnitude < 0.2f)
+		{
+			TDPlayer tdPlayer = TDWorld.getWorld().getTDPlayer();
+			tdPlayer.receiveDamage(1);
+			Destroy(gameObject);
+			return;
+		}
+		dir.Normalize();
 		dir *= getSpeed()*Time.deltaTime;
 		transform.Translate(dir);
 	}
 
-	protected abstract uint getStartHP();
-	protected abstract float getSpeed();
-	protected abstract Color getColor();
-
-	void receiveDamage(uint damage)
+	public void receiveDamage(uint damage)
 	{
 		m_HP -= (int) damage;
 		if (m_HP <= 0)
 			Destroy (gameObject);
 	}
+
+	public abstract Type type();
+
+	protected abstract uint getStartHP();
+	protected abstract float getSpeed();
+	protected abstract Color getColor();
 	
 	TDGrid.Cell[] m_path;
 

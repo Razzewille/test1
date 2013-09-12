@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MissleScript : MonoBehaviour {
+public class TDRocket : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -18,16 +18,19 @@ public class MissleScript : MonoBehaviour {
 		Vector3 dir = m_target.transform.position - transform.position;
 		if (dir.magnitude < 0.2)
 		{
-			Destroy(m_target);
+			TDEnemy enemy = TDWorld.getWorld().getTDEnemy(m_target);
+			enemy.receiveDamage(m_damage);
 			Destroy(gameObject);
 		}
 		else
 		{
 			dir.Normalize();
-			dir *= 0.2f;
+			dir *= m_speed*Time.deltaTime;
 			transform.Translate(dir);
-		}
-		
+		} 
 	}
+
 	public GameObject m_target;
+	public uint m_damage;
+	public float m_speed;
 }
