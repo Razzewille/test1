@@ -8,7 +8,7 @@ enemyHP              = 10
 killReward           = 20
 enemySpeed           = 3.0 // units/sec
 
-bossEnemyHP          = 20
+bossEnemyHP          = 200
 bossKillReward       = 30
 bossEnemySpeed       = 2.0 // units/sec
 
@@ -18,7 +18,7 @@ towerRocketSpeed     = 6.0 // units/sec
 towerRestoration 	 = 1.0 // sec
 towerEfficientRadius = 30.0
 
-uberTowerDamage      = 6
-uberTowerRocketSpeed = 1.0
+uberTowerDamage      = 12
+uberTowerRocketSpeed = 15.0
 uberTowerRestoration = 0.1 // sec
-uberTowerEfficientRadius = 30.0
+uberTowerEfficientRadius = 70.0

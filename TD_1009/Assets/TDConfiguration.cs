@@ -29,11 +29,9 @@ public class TDConfiguration
 		uberTowerRocketSpeed = 18.0f;
 		uberTowerRestoration = 0.1f; // sec
 		uberTowerEfficientRadius = 70f;
-
-		//readFromResource();
 	}
 
-	void readFromResource()
+	public void readFromResource()
 	{
 		Dictionary<string, string> gameConf = getLines();
 
@@ -49,11 +47,13 @@ public class TDConfiguration
 		    object val = field.GetValue(this);
 		    if (val is uint) 
 		    {
-				field.SetValue(this, Convert.ToUInt32(gameConf[name]));
+				uint x = Convert.ToUInt32(gameConf[name]);
+				field.SetValue(this, x);
 			}
 		    else if (val is float)
 		    {
-				field.SetValue(this, Convert.ToDouble(gameConf[name]));
+				float x = Convert.ToSingle(gameConf[name]);
+				field.SetValue(this, x);
 			}
 		}
 	}
@@ -62,6 +62,8 @@ public class TDConfiguration
 	{
 		Dictionary<string, string> dic = new Dictionary<string, string>();
 		TextAsset textFile = (TextAsset)Resources.Load("Configuration", typeof(TextAsset));
+		if (textFile == null)
+			return dic;
         System.IO.StringReader textStream = new System.IO.StringReader(textFile.text);
    		string line;
         while ((line = textStream.ReadLine()) != null)
@@ -71,7 +73,7 @@ public class TDConfiguration
 				continue;
 			if (line.Contains("//"))
 				continue;
-			string [] aToken = line.Split(' ');
+			string [] aToken = line.Split(new char[]{' '}, StringSplitOptions.RemoveEmptyEntries );
 			if (aToken.Length < 3)
 				continue;
 			dic[aToken[0]] = aToken[2];

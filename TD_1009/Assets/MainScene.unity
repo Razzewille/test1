@@ -82,6 +82,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 80958701}
+  - 114: {fileID: 80958702}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -100,6 +101,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &80958702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 80958700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f0d85718db482d4fa838e41b11637ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &380298717
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +266,6 @@ GameObject:
   - 92: {fileID: 1435223713}
   - 124: {fileID: 1435223712}
   - 81: {fileID: 1435223711}
-  - 114: {fileID: 1435223716}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -326,19 +337,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!114 &1435223716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1435223710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88da05924c0ed9949ac878fbc9d73d0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_towerPrefab: {fileID: 0}
-  m_enemyPrefab: {fileID: 0}
 --- !u!1 &1809644475
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public abstract class TDEnemy : MonoBehaviour {
 	void Update () {
 		GameObject player = TDWorld.getWorld().getPlayer();
 		Vector3 dir = player.transform.position - gameObject.transform.position;
+		dir.y = 0;
 		if (dir.magnitude < 0.2f)
 		{
 			TDPlayer tdPlayer = TDWorld.getWorld().getTDPlayer();

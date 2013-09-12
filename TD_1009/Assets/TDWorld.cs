@@ -3,9 +3,10 @@ using System.Collections;
 
 public class TDWorld : MonoBehaviour {
 
-	TDWorld()
+	void Awake()
 	{
 		m_configuration = new TDConfiguration();
+		m_configuration.readFromResource();
 	}
 
 	// Use this for initialization
@@ -34,7 +35,7 @@ public class TDWorld : MonoBehaviour {
 			{
 				if (hit.transform.gameObject.Equals(GameObject.Find("Terrain")))
 				{
-					if (Random.value < 0.05)
+					if (Random.value < 0.3)
 						addTower(TDTower.Type.eUber, hit.point);
 					else
 						addTower(TDTower.Type.eBasic, hit.point);
