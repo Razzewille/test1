@@ -11,8 +11,11 @@ public abstract class TDEnemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		m_HP = (int) getStartHP();
+		m_maxHP = m_HP = (int) getStartHP();
 		gameObject.renderer.material.color = getColor();
+		GameObject enemyHealthPrefab = (GameObject) Resources.Load("EnemyHealthBarPrefab");
+		m_healthBar = (GameObject) Instantiate(enemyHealthPrefab, new Vector3(0.5f, 0.5f), new Quaternion());
+		updateHealthBar();
 	}
 
 	// Update is called once per frame
@@ -30,6 +33,23 @@ public abstract class TDEnemy : MonoBehaviour {
 		dir.Normalize();
 		dir *= getSpeed()*Time.deltaTime;
 		transform.Translate(dir);
+		
+		updateHealthBar();
+	}
+
+	void updateHealthBar()
+	{
+		Vector3 txtPos = Camera.main.WorldToViewportPoint(transform.position);
+        //Vector3 normPos = new Vector3(txtPos.x/Camera.main.
+		m_healthBar.transform.position = txtPos;
+		float hpLeft = ((float) m_HP)/((float) m_maxHP);
+		hpLeft *= 30;
+		m_healthBar.guiTexture.pixelInset = new Rect(0, 0, hpLeft, 10);
+	}
+
+	void OnDestroy()
+	{
+		Destroy(m_healthBar);
 	}
 
 	public void receiveDamage(uint damage)
@@ -46,6 +66,8 @@ public abstract class TDEnemy : MonoBehaviour {
 	protected abstract Color getColor();
 	
 	TDGrid.Cell[] m_path;
-
+	
+	int m_maxHP;
 	int m_HP;
+	GameObject m_healthBar;
 }
