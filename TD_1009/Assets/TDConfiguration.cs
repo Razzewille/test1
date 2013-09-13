@@ -90,7 +90,9 @@ public class TDConfiguration
 	public uint drawPath; // Draws paths for enemies
 	public uint gridNbCellsX;
 	public uint gridNbCellsY;
-	
+
+	public uint nbTrees;
+
 	public uint playerHP;
 	
 	// Enemies

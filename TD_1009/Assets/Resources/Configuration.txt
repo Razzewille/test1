@@ -6,6 +6,8 @@ drawGrid             = 1
 // Draws paths for enemies
 drawPath             = 1
 
+nbTrees              = 50
+
 playerHP             = 10
 
 // Enemies

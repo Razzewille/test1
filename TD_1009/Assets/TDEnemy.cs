@@ -43,7 +43,6 @@ public abstract class TDEnemy : MonoBehaviour {
 	void updateHealthBar()
 	{
 		Vector3 txtPos = Camera.main.WorldToViewportPoint(transform.position);
-        //Vector3 normPos = new Vector3(txtPos.x/Camera.main.
 		m_healthBar.transform.position = txtPos;
 		float hpLeft = ((float) m_HP)/((float) m_maxHP);
 		hpLeft *= 30;
@@ -61,7 +60,7 @@ public abstract class TDEnemy : MonoBehaviour {
 		if (m_HP <= 0)
 		{
 			OnEventDestroy(this);
-			Destroy (gameObject);
+			Destroy(gameObject);
 		}
 	}
 

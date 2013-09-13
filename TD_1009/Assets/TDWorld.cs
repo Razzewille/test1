@@ -8,6 +8,31 @@ public class TDWorld : MonoBehaviour {
 		m_strategy = new TDTowerStrategy();
 		m_configuration = new TDConfiguration();
 		m_configuration.readFromResource();
+
+		GameObject terrain = getTerrain();
+		Bounds terrainBounds = terrain.renderer.bounds;
+		Vector3 lowPnt = from3dTo2d(terrainBounds.min);
+		Vector3 highPnt = from3dTo2d(terrainBounds.max);
+		m_grid = new TDGrid();
+		m_grid.initialize(m_configuration.gridNbCellsX, m_configuration.gridNbCellsY,
+						  lowPnt.x, lowPnt.y, highPnt.x - lowPnt.x, highPnt.y - lowPnt.y);
+
+		//put the obstacles
+		uint treesBuilt = 0;
+		while (treesBuilt < m_configuration.nbTrees)
+		{
+			uint i = (uint)((Random.value)*(float)(m_grid.nbCellsX));
+			uint j = (uint)((Random.value)*(float)(m_grid.nbCellsY));
+			TDGrid.Cell cell = new TDGrid.Cell();
+			cell.m_i = i;
+			cell.m_j = j;
+			if (m_grid.cellState(cell) != TDGrid.CellState.eFree)
+				continue;
+			Vector3 pos = m_grid.getCenter(cell);
+			pos = from2dTo3d(pos);
+			addTree(pos);
+			treesBuilt++;
+		}
 	}
 
 	// Use this for initialization
@@ -16,14 +41,6 @@ public class TDWorld : MonoBehaviour {
 		Random.seed = 1;
 		m_frequency = 1;
 		m_created = 0;
-		
-		GameObject terrain = getTerrain();
-		Bounds terrainBounds = terrain.renderer.bounds;
-		Vector3 lowPnt = from3dTo2d(terrainBounds.min);
-		Vector3 highPnt = from3dTo2d(terrainBounds.max);
-		m_grid = new TDGrid();
-		m_grid.initialize(m_configuration.gridNbCellsX, m_configuration.gridNbCellsY,
-						  lowPnt.x, lowPnt.y, highPnt.x - lowPnt.x, highPnt.y - lowPnt.y);
 	}
 	
 	// Update is called once per frame
@@ -185,9 +202,9 @@ public class TDWorld : MonoBehaviour {
 		return rocket;
 	}
 
-	public GameObject addObstacle(Vector3 pos)
+	public GameObject addTree(Vector3 pos)
 	{
-		return null;
+		return (GameObject) Instantiate(m_prefabTree, pos, Quaternion.identity);
 	}
 
 	public Vector3 from2dTo3d(Vector3 vec2d)
@@ -209,6 +226,7 @@ public class TDWorld : MonoBehaviour {
 	public GameObject m_prefabBasicTower;
 	public GameObject m_prefabUberTower;
 	public GameObject m_prefabRocket;
+	public GameObject m_prefabTree;
 
 	int m_created;
 	int m_frequency;

@@ -5,7 +5,6 @@ public class TDTerrainGrid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
- 		LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
 	}
 	
 	// Update is called once per frame
