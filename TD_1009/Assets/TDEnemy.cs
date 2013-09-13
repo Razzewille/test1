@@ -35,15 +35,18 @@ public abstract class TDEnemy : MonoBehaviour {
 			Destroy(gameObject);
 			return;
 		}
+		Bounds b = gameObject.renderer.bounds;
+		Vector3 deltab = b.max - b.min;
+		deltab.y = 0;
+		float delta = 0.5f*deltab.magnitude;
 		dir.Normalize();
-		dir *= getSpeed()*Time.deltaTime;
-		Vector3 nextPos = transform.position + dir;
+		Vector3 nextPos = transform.position + (1.0f + getSpeed()*Time.deltaTime)*dir;
 		if (!TDWorld.getWorld().isPositionFree(nextPos))
 		{
 			dir.Set(0, 0, 1);
-			dir *= getSpeed()*Time.deltaTime;
-			nextPos = transform.position + dir;
 		}
+		dir *= getSpeed()*Time.deltaTime;
+
 		transform.Translate(dir);
 		
 		updateHealthBar();

@@ -17,11 +17,19 @@ public class TDWorld : MonoBehaviour {
 		m_grid.initialize(m_configuration.gridNbCellsX, m_configuration.gridNbCellsY,
 						  lowPnt.x, lowPnt.y, highPnt.x - lowPnt.x, highPnt.y - lowPnt.y);
 
+		// Take into account obstacles
 		
 		GameObject player = getPlayer();
-		occupyPosition(player.renderer.bounds.center);	
+		occupyPosition(player.renderer.bounds.center);
 
-		//put the obstacles
+		GameObject [] aObstacles = getAllObstacles();
+		foreach (GameObject obj in aObstacles)
+		{
+			Bounds b = obj.renderer.bounds;
+			occupyRegion(b.min, b.max);
+		}
+
+		// put the dynamic obstacles
 		uint treesBuilt = 0;
 		while (treesBuilt < m_configuration.nbTrees)
 		{
@@ -155,6 +163,21 @@ public class TDWorld : MonoBehaviour {
 		Vector3 res = from3dTo2d(pos);
 		TDGrid.Cell cell = m_grid.getCell(res);
 		m_grid.setCellState(cell, TDGrid.CellState.eBusy);
+	}
+
+	public void occupyRegion(Vector3 minPos, Vector3 maxPos)
+	{
+		minPos = from3dTo2d(minPos);
+		TDGrid.Cell minCell = m_grid.getCell(minPos);
+		maxPos = from3dTo2d(maxPos);
+		TDGrid.Cell maxCell = m_grid.getCell(maxPos);
+		TDGrid.Cell cell = new TDGrid.Cell();
+		for (uint i=minCell.m_i; i<=maxCell.m_i; i++)
+			for (uint j=minCell.m_j; j<=maxCell.m_j; j++)
+			{
+				cell.m_i = i; cell.m_j = j;
+				m_grid.setCellState(cell, TDGrid.CellState.eBusy);
+			}
 	}
 
 	Vector3 truncate3d(Vector3 pos)
