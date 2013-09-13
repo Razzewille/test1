@@ -20,7 +20,8 @@ public class TDWorld : MonoBehaviour {
 		// Take into account obstacles
 		
 		GameObject player = getPlayer();
-		occupyPosition(player.renderer.bounds.center);
+		Bounds pb = player.renderer.bounds;
+		occupyRegion(pb.min, pb.max);
 
 		GameObject [] aObstacles = getAllObstacles();
 		foreach (GameObject obj in aObstacles)

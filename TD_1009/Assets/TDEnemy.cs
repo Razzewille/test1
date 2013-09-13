@@ -26,19 +26,26 @@ public abstract class TDEnemy : MonoBehaviour {
 		GameObject player = TDWorld.getWorld().getPlayer();
 		Vector3 dir = player.transform.position - gameObject.transform.position;
 		dir.y = 0;
+
+		Bounds b = gameObject.renderer.bounds;
+		Vector3 deltab = b.max - b.min;
+		deltab.y = 0;
+		float delta = 0.5f*deltab.magnitude;
+
+		Bounds pb = player.renderer.bounds;
+		Vector3 pdeltab = pb.max - pb.min;
+		pdeltab.y = 0;
+		float pdelta = 0.5f*pdeltab.magnitude;
+
 		TDGrid grid = TDWorld.getWorld().m_grid;
-		double gridDiag = Mathf.Sqrt(grid.m_gridX*grid.m_gridX + grid.m_gridY*grid.m_gridY);
-		if (dir.magnitude < 0.5*gridDiag)
+		double gridDiag = 1.1f*Mathf.Sqrt(grid.m_gridX*grid.m_gridX + grid.m_gridY*grid.m_gridY);
+		if (dir.magnitude < gridDiag + delta + pdelta)
 		{
 			TDPlayer tdPlayer = TDWorld.getWorld().getTDPlayer();
 			tdPlayer.receiveDamage(1);
 			Destroy(gameObject);
 			return;
-		}
-		Bounds b = gameObject.renderer.bounds;
-		Vector3 deltab = b.max - b.min;
-		deltab.y = 0;
-		float delta = 0.5f*deltab.magnitude;
+		}		
 		dir.Normalize();
 		Vector3 nextPos = transform.position + (1.0f + getSpeed()*Time.deltaTime)*dir;
 		if (!TDWorld.getWorld().isPositionFree(nextPos))
