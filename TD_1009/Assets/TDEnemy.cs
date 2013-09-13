@@ -61,6 +61,8 @@ public abstract class TDEnemy : MonoBehaviour {
 
 	void updateHealthBar()
 	{
+		if (m_healthBar == null)
+			return;
 		Vector3 txtPos = Camera.main.WorldToViewportPoint(transform.position);
 		m_healthBar.transform.position = txtPos;
 		float hpLeft = ((float) m_HP)/((float) m_maxHP);
