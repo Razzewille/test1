@@ -1,27 +1,34 @@
 // Be careful with letter register
 // Parameters are to be written exactly as they are
 
-drawGrid             = 1 // Draws grid over terrain
-drawPath             = 1 // Draws paths for enemies
+// Draws grid over terrain
+drawGrid             = 1
+// Draws paths for enemies
+drawPath             = 1
 
 playerHP             = 10
 
 // Enemies
 enemyHP              = 30
 killReward           = 20
-enemySpeed           = 3.0 // units/sec
+// units/sec
+enemySpeed           = 3.0
 
 bossEnemyHP          = 600
 bossKillReward       = 30
-bossEnemySpeed       = 2.0 // units/sec
+// units/sec
+bossEnemySpeed       = 2.0
 
 //Towers
 towerDamage          = 3
-towerRocketSpeed     = 6.0 // units/sec
-towerRestoration 	 = 1.0 // sec
+// units/sec
+towerRocketSpeed     = 6.0
+towerRestoration     = 1.0
+// sec
 towerEfficientRadius = 10.0
 
 uberTowerDamage      = 12
 uberTowerRocketSpeed = 15.0
-uberTowerRestoration = 0.1 // sec
+// sec
+uberTowerRestoration = 0.1
 uberTowerEfficientRadius = 30.0
