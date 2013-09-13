@@ -81,6 +81,11 @@ public class TDWorld : MonoBehaviour {
 			}
 		}
 	}
+
+	void LateUpdate()
+	{
+		m_aCachedEnemies = null;
+	}
 	
 	public static TDWorld getWorld()
 	{
@@ -115,11 +120,18 @@ public class TDWorld : MonoBehaviour {
 	{
 		return (TDRocket) obj.GetComponent("TDRocket");
 	}
-
-	public GameObject [] getAllEnemies()
+	
+    // May contain incomplete list or some deleted entries
+	public GameObject [] getAllEnemiesUnsafe()
 	{
-		return GameObject.FindGameObjectsWithTag("Enemy");
+		if (m_aCachedEnemies == null)
+		{
+			m_aCachedEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+		}
+		return m_aCachedEnemies;
 	}
+	GameObject [] m_aCachedEnemies;
+
 
 	public GameObject [] getAllTowers()
 	{

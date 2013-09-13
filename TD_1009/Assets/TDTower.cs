@@ -21,11 +21,13 @@ public abstract class TDTower : MonoBehaviour {
 		float respawn = getRestoration();
 		if (currentTime < (m_restTime + respawn))
 			return;
-		GameObject [] aAllEnemies = TDWorld.getWorld().getAllEnemies();
+		GameObject [] aAllEnemies = TDWorld.getWorld().getAllEnemiesUnsafe();
 		double recDist = -1;
 		GameObject recObject = null;
 		foreach(GameObject thisObject in aAllEnemies)
 		{
+			if (thisObject == null)
+				continue;
 			float dist = (transform.position - thisObject.transform.position).magnitude;
 			float efficientRadius = getEfficientRadius();
 		   	if (dist < efficientRadius)
