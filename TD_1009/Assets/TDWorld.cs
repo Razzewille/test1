@@ -17,6 +17,10 @@ public class TDWorld : MonoBehaviour {
 		m_grid.initialize(m_configuration.gridNbCellsX, m_configuration.gridNbCellsY,
 						  lowPnt.x, lowPnt.y, highPnt.x - lowPnt.x, highPnt.y - lowPnt.y);
 
+		
+		GameObject player = getPlayer();
+		occupyPosition(player.renderer.bounds.center);	
+
 		//put the obstacles
 		uint treesBuilt = 0;
 		while (treesBuilt < m_configuration.nbTrees)
@@ -39,7 +43,6 @@ public class TDWorld : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		m_startTime = -1;
-		Random.seed = 1;
 		m_frequency = 1;
 		m_created = 0;
 	}
@@ -128,14 +131,14 @@ public class TDWorld : MonoBehaviour {
 		return GameObject.FindGameObjectsWithTag("Obstacle");
 	}
 
-	bool isPositionFree(Vector3 pos)
+	public bool isPositionFree(Vector3 pos)
 	{
 		Vector3 res = from3dTo2d(pos);
 		TDGrid.Cell cell = m_grid.getCell(res);
 		return (m_grid.cellState(cell) == TDGrid.CellState.eFree);
 	}
 
-	void occupyPosition(Vector3 pos)
+	public void occupyPosition(Vector3 pos)
 	{
 		Vector3 res = from3dTo2d(pos);
 		TDGrid.Cell cell = m_grid.getCell(res);

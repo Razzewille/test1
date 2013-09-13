@@ -7,6 +7,7 @@ public class TDPlayer : MonoBehaviour {
 	void Start () {
 		m_health = (int) TDWorld.getWorld().m_configuration.playerHP;
 		m_money = 0;
+		gameObject.renderer.material.color = Color.gray;
 	}
 	
 	// Update is called once per frame

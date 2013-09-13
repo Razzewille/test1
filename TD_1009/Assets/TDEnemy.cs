@@ -12,12 +12,6 @@ public abstract class TDEnemy : MonoBehaviour {
 	public delegate void EventHandler(TDEnemy enemy);
 	public event EventHandler OnEventDestroy;
 
-	void DestroyThis()
-	{
-		OnEventDestroy(this);
-		Destroy(gameObject);
-	}		
-
 	// Use this for initialization
 	void Start () {
 		m_maxHP = m_HP = (int) getStartHP();
@@ -32,15 +26,24 @@ public abstract class TDEnemy : MonoBehaviour {
 		GameObject player = TDWorld.getWorld().getPlayer();
 		Vector3 dir = player.transform.position - gameObject.transform.position;
 		dir.y = 0;
-		if (dir.magnitude < 0.2f)
+		TDGrid grid = TDWorld.getWorld().m_grid;
+		double gridDiag = Mathf.Sqrt(grid.m_gridX*grid.m_gridX + grid.m_gridY*grid.m_gridY);
+		if (dir.magnitude < 0.5*gridDiag)
 		{
 			TDPlayer tdPlayer = TDWorld.getWorld().getTDPlayer();
 			tdPlayer.receiveDamage(1);
-			DestroyThis();
+			Destroy(gameObject);
 			return;
 		}
 		dir.Normalize();
 		dir *= getSpeed()*Time.deltaTime;
+		Vector3 nextPos = transform.position + dir;
+		if (!TDWorld.getWorld().isPositionFree(nextPos))
+		{
+			dir.Set(0, 0, 1);
+			dir *= getSpeed()*Time.deltaTime;
+			nextPos = transform.position + dir;
+		}
 		transform.Translate(dir);
 		
 		updateHealthBar();
@@ -58,6 +61,8 @@ public abstract class TDEnemy : MonoBehaviour {
 	void OnDestroy()
 	{
 		Destroy(m_healthBar);
+		if (OnEventDestroy != null)
+			OnEventDestroy(this);
 	}
 
 	public void receiveDamage(uint damage)
@@ -65,7 +70,7 @@ public abstract class TDEnemy : MonoBehaviour {
 		m_HP -= (int) damage;
 		if (m_HP <= 0)
 		{
-			DestroyThis();
+			Destroy(gameObject);
 		}
 	}
 
