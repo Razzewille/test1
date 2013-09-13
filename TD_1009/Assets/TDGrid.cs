@@ -80,12 +80,12 @@ public class TDGrid
 		if (pos.x < 0f)
 			cell.m_i = 0;
 		else			
-			cell.m_i = (uint)(pos.x/m_gridX);
+			cell.m_i = (uint)((pos.x/m_gridX));
 		pos.y -= m_startY;
 		if (pos.y < 0f)
 			cell.m_j = 0;
 		else			
-			cell.m_j = (uint)(pos.y/m_gridX);
+			cell.m_j = (uint)((pos.y/m_gridX));
 		return cell;
 	}
 	

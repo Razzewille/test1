@@ -10,7 +10,13 @@ public abstract class TDEnemy : MonoBehaviour {
 	};
 
 	public delegate void EventHandler(TDEnemy enemy);
-	public event EventHandler OnEventDestroy;        		
+	public event EventHandler OnEventDestroy;
+
+	void DestroyThis()
+	{
+		OnEventDestroy(this);
+		Destroy(gameObject);
+	}		
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +36,7 @@ public abstract class TDEnemy : MonoBehaviour {
 		{
 			TDPlayer tdPlayer = TDWorld.getWorld().getTDPlayer();
 			tdPlayer.receiveDamage(1);
-			Destroy(gameObject);
+			DestroyThis();
 			return;
 		}
 		dir.Normalize();
@@ -59,8 +65,7 @@ public abstract class TDEnemy : MonoBehaviour {
 		m_HP -= (int) damage;
 		if (m_HP <= 0)
 		{
-			OnEventDestroy(this);
-			Destroy(gameObject);
+			DestroyThis();
 		}
 	}
 

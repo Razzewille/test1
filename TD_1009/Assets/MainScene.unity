@@ -380,6 +380,7 @@ MonoBehaviour:
   m_prefabBasicTower: {fileID: 100000, guid: e0bbb8c69ac01654fa982d21038cc3ae, type: 2}
   m_prefabUberTower: {fileID: 100000, guid: f94d8b5c8c22e2e4f9e165390e771ef3, type: 2}
   m_prefabRocket: {fileID: 100000, guid: f66854341f96d8c4c9a64f33e566d3a4, type: 2}
+  m_prefabTree: {fileID: 100000, guid: 3b8c0a310dad6794ba8028026450a141, type: 2}
 --- !u!1 &1852161209
 GameObject:
   m_ObjectHideFlags: 0

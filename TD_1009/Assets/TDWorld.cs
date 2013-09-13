@@ -30,6 +30,7 @@ public class TDWorld : MonoBehaviour {
 				continue;
 			Vector3 pos = m_grid.getCenter(cell);
 			pos = from2dTo3d(pos);
+			occupyPosition(pos);
 			addTree(pos);
 			treesBuilt++;
 		}
