@@ -3,12 +3,26 @@ using System.Collections;
 
 public class TDGrid
 {
-	TDGrid()
+	public TDGrid()
 	{
 		m_ncx = m_ncy = 1;
 		reallocate();
 		m_length = m_width = 1f;
 		m_startX = m_startY = 0;
+	}
+
+	public bool initialize(uint nbCellsX, uint nbCellsY,
+		float startX, float startY, float length, float width)
+	{
+		m_ncx = nbCellsX;
+		m_ncy = nbCellsY;
+		m_startX = startX;
+		m_startY = startY;
+		m_length = length;
+		m_width  = width;
+		reallocate();
+		recalcGrid();
+		return true;
 	}
 
 	public uint nbCellsX
@@ -114,6 +128,6 @@ public class TDGrid
 	public float m_startX;
 	public float m_startY;
 	
-	float m_gridX;
-	float m_gridY;
+	public float m_gridX;
+	public float m_gridY;
 }

@@ -8,6 +8,11 @@ public class TDConfiguration
 {
 	public TDConfiguration()
 	{
+		drawGrid = 1;
+		drawPath = 1;
+		gridNbCellsX = 20;
+		gridNbCellsY = 20;
+
 		playerHP             = 10;
 		
 		// Enemies
@@ -80,6 +85,11 @@ public class TDConfiguration
 		}
 		return dic;
 	}
+
+	public uint drawGrid; // Draws grid over terrain
+	public uint drawPath; // Draws paths for enemies
+	public uint gridNbCellsX;
+	public uint gridNbCellsY;
 	
 	public uint playerHP;
 	

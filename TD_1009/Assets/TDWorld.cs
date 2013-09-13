@@ -16,6 +16,14 @@ public class TDWorld : MonoBehaviour {
 		Random.seed = 1;
 		m_frequency = 1;
 		m_created = 0;
+		
+		GameObject terrain = getTerrain();
+		Bounds terrainBounds = terrain.renderer.bounds;
+		Vector3 lowPnt = from3dTo2d(terrainBounds.min);
+		Vector3 highPnt = from3dTo2d(terrainBounds.max);
+		m_grid = new TDGrid();
+		m_grid.initialize(m_configuration.gridNbCellsX, m_configuration.gridNbCellsY,
+						  lowPnt.x, lowPnt.y, highPnt.x - lowPnt.x, highPnt.y - lowPnt.y);
 	}
 	
 	// Update is called once per frame
@@ -58,6 +66,12 @@ public class TDWorld : MonoBehaviour {
 	{
 		GameObject [] aPlayers = GameObject.FindGameObjectsWithTag("Player");
 		return aPlayers[0];
+	}
+
+	public GameObject getTerrain()
+	{
+		GameObject [] aTerrains = GameObject.FindGameObjectsWithTag("Terrain");
+		return aTerrains[0];
 	}
 
 	public TDPlayer getTDPlayer()
@@ -152,9 +166,19 @@ public class TDWorld : MonoBehaviour {
 		return null;
 	}
 
+	public Vector3 from2dTo3d(Vector3 vec2d)
+	{
+		return new Vector3(vec2d.x, 1, vec2d.y);
+	}
+
+	public Vector3 from3dTo2d(Vector3 vec3d)
+	{
+		return new Vector3(vec3d.x, vec3d.z, 0);
+	}
+
 	public TDConfiguration m_configuration;
 	public TDTowerStrategy m_strategy;
-	TDGrid m_grid;
+	public TDGrid m_grid;
 
 	public GameObject m_prefabBasicEnemy;
 	public GameObject m_prefabBossEnemy;
