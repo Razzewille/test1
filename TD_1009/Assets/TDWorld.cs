@@ -44,10 +44,12 @@ public class TDWorld : MonoBehaviour {
 			{
 				if (hit.transform.gameObject.Equals(GameObject.Find("Terrain")))
 				{
+					Vector3 pos = hit.point;
+					pos = truncate3d(pos);
 					if (Random.value < 0.3)
-						addTower(TDTower.Type.eUber, hit.point);
+						addTower(TDTower.Type.eUber, pos);
 					else
-						addTower(TDTower.Type.eBasic, hit.point);
+						addTower(TDTower.Type.eBasic, pos);
 					m_created++;
 					m_frequency = (3*m_created)/10 + 1;
 				}
@@ -108,7 +110,16 @@ public class TDWorld : MonoBehaviour {
 	{
 		return false;
 	}
-	
+
+	Vector3 truncate3d(Vector3 pos)
+	{
+		Vector3 res = from3dTo2d(pos);
+		TDGrid.Cell cell = m_grid.getCell(res);
+		res = m_grid.getCenter(cell);
+		res = from2dTo3d(res);
+		return res;
+	}
+
 	public GameObject addEnemy(TDEnemy.Type type, Vector3 pos)
 	{
 		GameObject enemy = null;

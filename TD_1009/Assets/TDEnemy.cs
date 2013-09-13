@@ -52,7 +52,6 @@ public abstract class TDEnemy : MonoBehaviour {
 
 	void OnDestroy()
 	{
-		OnEventDestroy(this);
 		Destroy(m_healthBar);
 	}
 
@@ -60,7 +59,10 @@ public abstract class TDEnemy : MonoBehaviour {
 	{
 		m_HP -= (int) damage;
 		if (m_HP <= 0)
+		{
+			OnEventDestroy(this);
 			Destroy (gameObject);
+		}
 	}
 
 	public abstract Type type();

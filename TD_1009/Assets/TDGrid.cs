@@ -61,33 +61,27 @@ public class TDGrid
 		return m_aCells[cell.m_i, cell.m_j];
 	}
 
-	Vector2 getCenter(Cell cell)
+	public Vector2 getCenter(Cell cell)
 	{
-		return new Vector2(m_gridX*((float)(cell.m_i) + 0.5f), m_gridY*((float)(cell.m_j) + 0.5f));
+		float cx = m_gridX*((float)(cell.m_i) + 0.5f) + m_startX;
+		float cy = m_gridY*((float)(cell.m_j) + 0.5f) + m_startY;
+		return new Vector2(cx, cy);
 	}
 
-	Cell getCell(Vector2 pos)
+	public Cell getCell(Vector2 pos)
 	{
 		Cell cell = new Cell();
-		pos.x += 0.5f - m_startX;
+		pos.x -= m_startX;
 		if (pos.x < 0f)
 			cell.m_i = 0;
 		else			
 			cell.m_i = (uint)(pos.x/m_gridX);
-		pos.y += 0.5f - m_startY;
+		pos.y -= m_startY;
 		if (pos.y < 0f)
 			cell.m_j = 0;
 		else			
 			cell.m_j = (uint)(pos.y/m_gridX);
 		return cell;
-	}
-
-	uint getCellY(float coordY)
-	{
-		coordY += 0.5f - m_startY;
-		if (coordY < 0f)
-			return 0;
-		return (uint)(coordY/m_gridY);
 	}
 	
     // Registers one more object with grid assuming it takes one cell
