@@ -75,7 +75,7 @@ public class TDWorld : MonoBehaviour {
 						else
 							addTower(TDTower.Type.eBasic, pos);
 						m_created++;
-						m_frequency = (3*m_created)/10 + 1;
+						m_frequency = (5*m_created)/10 + 1;
 					}
 				}
 			}

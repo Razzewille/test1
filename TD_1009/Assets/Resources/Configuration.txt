@@ -34,5 +34,5 @@ towerEfficientRadius = 30.0
 uberTowerDamage      = 12
 uberTowerRocketSpeed = 45.0
 // sec
-uberTowerRestoration = 0.05
-uberTowerEfficientRadius = 90.0
+uberTowerRestoration = 0.1
+uberTowerEfficientRadius = 45.0
