@@ -19,7 +19,8 @@ public class TDRocket : MonoBehaviour {
 		if (dir.magnitude < 0.2)
 		{
 			TDEnemy enemy = TDWorld.getWorld().getTDEnemy(m_target);
-			enemy.receiveDamage(m_damage);
+			if (enemy != null)
+				enemy.receiveDamage(m_damage);
 			Destroy(gameObject);
 		}
 		else

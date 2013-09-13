@@ -48,7 +48,7 @@ public class TDGrid
 		set {m_width = value; recalcGrid();}
 	}
 
-	enum CellState {eFree = 0, eBusy};
+	public enum CellState {eFree = 0, eBusy};
 	public struct Cell
 	{
 		Cell(uint i, uint j) {m_i = i; m_j = j; pos = new Vector2();}
@@ -56,9 +56,14 @@ public class TDGrid
 		public uint m_i, m_j;
 	}
 
-	CellState cellState(Cell cell)
+	public CellState cellState(Cell cell)
 	{
 		return m_aCells[cell.m_i, cell.m_j];
+	}
+
+	public void setCellState(Cell cell, CellState state)
+	{
+		m_aCells[cell.m_i, cell.m_j] = state;
 	}
 
 	public Vector2 getCenter(Cell cell)

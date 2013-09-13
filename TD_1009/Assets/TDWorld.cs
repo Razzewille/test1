@@ -46,12 +46,16 @@ public class TDWorld : MonoBehaviour {
 				{
 					Vector3 pos = hit.point;
 					pos = truncate3d(pos);
-					if (Random.value < 0.3)
-						addTower(TDTower.Type.eUber, pos);
-					else
-						addTower(TDTower.Type.eBasic, pos);
-					m_created++;
-					m_frequency = (3*m_created)/10 + 1;
+					if (isPositionFree(pos))
+					{
+						occupyPosition(pos);
+						if (Random.value < 0.3)
+							addTower(TDTower.Type.eUber, pos);
+						else
+							addTower(TDTower.Type.eBasic, pos);
+						m_created++;
+						m_frequency = (3*m_created)/10 + 1;
+					}
 				}
 			}
 		}
@@ -108,7 +112,16 @@ public class TDWorld : MonoBehaviour {
 
 	bool isPositionFree(Vector3 pos)
 	{
-		return false;
+		Vector3 res = from3dTo2d(pos);
+		TDGrid.Cell cell = m_grid.getCell(res);
+		return (m_grid.cellState(cell) == TDGrid.CellState.eFree);
+	}
+
+	void occupyPosition(Vector3 pos)
+	{
+		Vector3 res = from3dTo2d(pos);
+		TDGrid.Cell cell = m_grid.getCell(res);
+		m_grid.setCellState(cell, TDGrid.CellState.eBusy);
 	}
 
 	Vector3 truncate3d(Vector3 pos)
