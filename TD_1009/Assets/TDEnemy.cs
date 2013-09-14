@@ -37,7 +37,6 @@ public abstract class TDEnemy : MonoBehaviour {
 		pdeltab.y = 0;
 		float pdelta = 0.5f*pdeltab.magnitude;
 
-		TDGrid grid = TDWorld.getWorld().m_grid;
 		if (dir.magnitude < delta + pdelta)
 		{
 			TDPlayer tdPlayer = TDWorld.getWorld().getTDPlayer();
