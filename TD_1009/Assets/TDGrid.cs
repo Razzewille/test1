@@ -58,6 +58,10 @@ public class TDGrid
 
 	public CellState cellState(Cell cell)
 	{
+		if (cell.m_i < 0 || cell.m_i >= m_ncx)
+			return CellState.eBusy;
+		if (cell.m_j < 0 || cell.m_j >= m_ncy)
+			return CellState.eBusy;
 		return m_aCells[cell.m_i, cell.m_j];
 	}
 

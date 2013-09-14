@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class TDWorld : MonoBehaviour {
 
@@ -18,11 +18,6 @@ public class TDWorld : MonoBehaviour {
 						  lowPnt.x, lowPnt.y, highPnt.x - lowPnt.x, highPnt.y - lowPnt.y);
 
 		// Take into account obstacles
-		
-		GameObject player = getPlayer();
-		Bounds pb = player.renderer.bounds;
-		occupyRegion(pb.min, pb.max);
-
 		GameObject [] aObstacles = getAllObstacles();
 		foreach (GameObject obj in aObstacles)
 		{
@@ -60,10 +55,14 @@ public class TDWorld : MonoBehaviour {
 	void Update () {
 		if (m_startTime != (int) ((float)(m_frequency)*Time.time))
 		{
+			// Random position
+			GameObject [] aRespawnPoint = getAllEnemyRespawnPoints();
+			uint respawnIndex = (uint)(Random.value*aRespawnPoint.Length);
+			Vector3 pos = aRespawnPoint[respawnIndex].transform.position;
 			if (Random.value < 0.05)
-				addEnemy(TDEnemy.Type.eBoss, new Vector3(40, 2, (int)(60.0f*Random.value) - 50));
+				addEnemy(TDEnemy.Type.eBoss, pos);
 			else
-				addEnemy(TDEnemy.Type.eBasic, new Vector3(40, 2, (int)(60.0f*Random.value) - 50));
+				addEnemy(TDEnemy.Type.eBasic, pos);
 			m_startTime = (int) ((float)(m_frequency)*Time.time);
 		}
 		if (Input.GetMouseButtonDown(0))
@@ -149,7 +148,19 @@ public class TDWorld : MonoBehaviour {
 
 	public GameObject [] getAllObstacles()
 	{
-		return GameObject.FindGameObjectsWithTag("Obstacle");
+		GameObject [] aObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+		GameObject [] aPlayer = GameObject.FindGameObjectsWithTag("Player");
+		GameObject [] aEnemyRespawn = GameObject.FindGameObjectsWithTag("EnemyRespawn");
+		List<GameObject> aAllObstacles = new List<GameObject>();
+		aAllObstacles.AddRange(aObstacles);
+		aAllObstacles.AddRange(aPlayer);
+		aAllObstacles.AddRange(aEnemyRespawn);
+		return aAllObstacles.ToArray();
+	}
+
+	public GameObject [] getAllEnemyRespawnPoints()
+	{
+		return GameObject.FindGameObjectsWithTag("EnemyRespawn");
 	}
 
 	public bool isPositionFree(Vector3 pos)
