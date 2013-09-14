@@ -61,7 +61,11 @@ public abstract class TDEnemy : MonoBehaviour {
 		Vector3 nextPos = transform.position + (1.0f + getSpeed()*Time.deltaTime)*dir;
 		if (TDGrid.CellState.eBusy == TDWorld.getWorld().positionState(nextPos))
 		{
-			dir = otherDir;
+			Vector3 nextPos2 = transform.position + (1.0f + getSpeed()*Time.deltaTime)*otherDir;
+			if (TDGrid.CellState.eBusy != TDWorld.getWorld().positionState(nextPos2))
+			{
+				dir = otherDir;
+			}
 		}
 		dir *= getSpeed()*Time.deltaTime;
 
