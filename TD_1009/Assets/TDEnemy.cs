@@ -38,8 +38,7 @@ public abstract class TDEnemy : MonoBehaviour {
 		float pdelta = 0.5f*pdeltab.magnitude;
 
 		TDGrid grid = TDWorld.getWorld().m_grid;
-		double gridDiag = 1.1f*Mathf.Sqrt(grid.m_gridX*grid.m_gridX + grid.m_gridY*grid.m_gridY);
-		if (dir.magnitude < gridDiag + delta + pdelta)
+		if (dir.magnitude < delta + pdelta)
 		{
 			TDPlayer tdPlayer = TDWorld.getWorld().getTDPlayer();
 			tdPlayer.receiveDamage(1);
@@ -48,7 +47,7 @@ public abstract class TDEnemy : MonoBehaviour {
 		}		
 		dir.Normalize();
 		Vector3 nextPos = transform.position + (1.0f + getSpeed()*Time.deltaTime)*dir;
-		if (!TDWorld.getWorld().isPositionFree(nextPos))
+		if (TDGrid.CellState.eBusy == TDWorld.getWorld().positionState(nextPos))
 		{
 			dir.Set(0, 0, 1);
 		}

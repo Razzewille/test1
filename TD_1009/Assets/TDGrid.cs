@@ -48,7 +48,7 @@ public class TDGrid
 		set {m_width = value; recalcGrid();}
 	}
 
-	public enum CellState {eFree = 0, eBusy};
+	public enum CellState {eFree = 0, eBusy, ePlayer, eEnemyRespawn};
 	public struct Cell
 	{
 		Cell(uint i, uint j) {m_i = i; m_j = j; pos = new Vector2();}
@@ -93,14 +93,7 @@ public class TDGrid
 		return cell;
 	}
 	
-    // Registers one more object with grid assuming it takes one cell
-	void addObject(Vector2 pos)
-	{
-		Cell cell = getCell(pos);
-		m_aCells[cell.m_i, cell.m_j] = CellState.eBusy;
-	}
-	
-	bool buildPath(Vector2 startPos, Vector2 endPos, out Cell[] path)
+    bool buildPath(Vector2 startPos, Vector2 endPos, out Cell[] path)
 	{
 		path = null;
 		return false;

@@ -21,8 +21,18 @@ public class TDWorld : MonoBehaviour {
 		GameObject [] aObstacles = getAllObstacles();
 		foreach (GameObject obj in aObstacles)
 		{
+			TDGrid.CellState cellState = TDGrid.CellState.eBusy;
+			switch (obj.tag)
+			{
+				case "Player":
+					cellState = TDGrid.CellState.ePlayer;
+					break;
+				case "EnemyRespawn":
+					cellState = TDGrid.CellState.eEnemyRespawn;
+					break;
+			}
 			Bounds b = obj.renderer.bounds;
-			occupyRegion(b.min, b.max);
+			occupyRegion(b.min, b.max, cellState);
 		}
 
 		// put the dynamic obstacles
@@ -38,7 +48,7 @@ public class TDWorld : MonoBehaviour {
 				continue;
 			Vector3 pos = m_grid.getCenter(cell);
 			pos = from2dTo3d(pos);
-			occupyPosition(pos);
+			occupyPosition(pos, TDGrid.CellState.eBusy);
 			addTree(pos);
 			treesBuilt++;
 		}
@@ -75,9 +85,9 @@ public class TDWorld : MonoBehaviour {
 				{
 					Vector3 pos = hit.point;
 					pos = truncate3d(pos);
-					if (isPositionFree(pos))
+					if (TDGrid.CellState.eFree == positionState(pos))
 					{
-						occupyPosition(pos);
+						occupyPosition(pos, TDGrid.CellState.eBusy);
 						if (Random.value < 0.3)
 							addTower(TDTower.Type.eUber, pos);
 						else
@@ -163,21 +173,21 @@ public class TDWorld : MonoBehaviour {
 		return GameObject.FindGameObjectsWithTag("EnemyRespawn");
 	}
 
-	public bool isPositionFree(Vector3 pos)
+	public TDGrid.CellState positionState(Vector3 pos)
 	{
 		Vector3 res = from3dTo2d(pos);
 		TDGrid.Cell cell = m_grid.getCell(res);
-		return (m_grid.cellState(cell) == TDGrid.CellState.eFree);
+		return m_grid.cellState(cell);
 	}
 
-	public void occupyPosition(Vector3 pos)
+	public void occupyPosition(Vector3 pos, TDGrid.CellState occupyState)
 	{
 		Vector3 res = from3dTo2d(pos);
 		TDGrid.Cell cell = m_grid.getCell(res);
-		m_grid.setCellState(cell, TDGrid.CellState.eBusy);
+		m_grid.setCellState(cell, occupyState);
 	}
 
-	public void occupyRegion(Vector3 minPos, Vector3 maxPos)
+	public void occupyRegion(Vector3 minPos, Vector3 maxPos, TDGrid.CellState occupyState)
 	{
 		minPos = from3dTo2d(minPos);
 		TDGrid.Cell minCell = m_grid.getCell(minPos);
@@ -188,7 +198,7 @@ public class TDWorld : MonoBehaviour {
 			for (uint j=minCell.m_j; j<=maxCell.m_j; j++)
 			{
 				cell.m_i = i; cell.m_j = j;
-				m_grid.setCellState(cell, TDGrid.CellState.eBusy);
+				m_grid.setCellState(cell, occupyState);
 			}
 	}
 
