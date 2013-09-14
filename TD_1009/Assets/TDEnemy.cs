@@ -44,12 +44,24 @@ public abstract class TDEnemy : MonoBehaviour {
 			tdPlayer.receiveDamage(1);
 			Destroy(gameObject);
 			return;
-		}		
+		}
+		Vector3 otherDir = dir;
+		if (Mathf.Abs(dir.x) > Mathf.Abs(dir.z))
+		{
+			dir.z = 0;
+			otherDir.x = 0;
+		}
+		else
+		{
+			dir.x = 0;
+			otherDir.z = 0;
+		}
 		dir.Normalize();
+		otherDir.Normalize();
 		Vector3 nextPos = transform.position + (1.0f + getSpeed()*Time.deltaTime)*dir;
 		if (TDGrid.CellState.eBusy == TDWorld.getWorld().positionState(nextPos))
 		{
-			dir.Set(0, 0, 1);
+			dir = otherDir;
 		}
 		dir *= getSpeed()*Time.deltaTime;
 
