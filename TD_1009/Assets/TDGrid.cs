@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class TDGrid
 {
@@ -92,11 +92,156 @@ public class TDGrid
 			cell.m_j = (uint)((pos.y/m_gridX));
 		return cell;
 	}
-	
-    bool buildPath(Vector2 startPos, Vector2 endPos, out Cell[] path)
+
+	class PathNode
 	{
-		path = null;
-		return false;
+		public Cell m_cell;
+		public Cell? m_parentCell;
+
+		public int m_stepsFromStart; 
+		public int m_heuristicRating;
+		public int m_priority // less is better
+		{
+			get
+			{
+				return m_stepsFromStart + m_heuristicRating;
+			}
+		}
+	}
+
+	//Gets neighborhoods if exists
+	List<Cell> getSuccessors(Cell sourceCell)
+	{
+		sbyte[,] direction = new sbyte[4, 2] { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
+		List<Cell> successors = new List<Cell>();
+
+		for (int i = 0; i < 4; ++i)
+		{
+			int posI = (int)sourceCell.m_i + direction[i, 0];
+			int posJ = (int)sourceCell.m_j + direction[i, 1];
+
+			if ( (0 <= posI) && (0 <= posJ) && (m_ncx > posI) && (m_ncy > posJ))
+			{
+				if (CellState.eFree != m_aCells[posI, posJ])
+					continue;
+
+				Cell cell = new Cell();
+				cell.m_i = (uint)posI;
+				cell.m_j = (uint)posJ;
+				successors.Add(cell);
+			}
+		}
+
+		return successors;
+	}
+
+	// EuclideanNoSQR distance to end cell
+	int heuristicRating(Cell curCell, Cell endCell)
+	{
+		int di = (int)(curCell.m_i - endCell.m_i);
+		int dj = (int)(curCell.m_j - endCell.m_j);
+		int rating = di*di + dj*dj;
+		return rating;
+	}
+
+	bool buildPath(Cell startCell, Cell endCell, out Cell[] path)
+	{
+		List<PathNode> closedCells = new List<PathNode>();
+		SortedDictionary<int, PathNode> openCells = new SortedDictionary<int, PathNode>(); // int - priority
+		
+		PathNode startPath = new PathNode();
+		startPath.m_cell = startCell;
+		startPath.m_parentCell = null;
+		startPath.m_stepsFromStart = 0;
+		startPath.m_heuristicRating = heuristicRating(startCell, endCell);
+		openCells.Add(startPath.m_priority, startPath);
+
+		bool pathFound = false;
+		PathNode endPath = null;
+
+		while (0 < openCells.Count)
+		{
+			KeyValuePair<int, PathNode> priorityPath = openCells.GetEnumerator().Current;
+			PathNode parentNode = priorityPath.Value;
+
+			closedCells.Add(parentNode);
+			openCells.Remove(priorityPath.Key);
+			if (endCell.Equals(parentNode.m_cell))
+			{
+				pathFound = true;
+				endPath = parentNode;
+				break;
+			}
+
+			List<Cell> successors = getSuccessors(parentNode.m_cell);
+			foreach (Cell nextCell in successors)
+			{
+				PathNode nextPath = new PathNode();
+				nextPath.m_cell = nextCell;
+				nextPath.m_parentCell = parentNode.m_cell;
+				nextPath.m_stepsFromStart = parentNode.m_stepsFromStart + 1;
+
+				bool cellProcessed = false;
+				foreach (KeyValuePair<int, PathNode> iterator in openCells)
+				{
+					PathNode openedNode = iterator.Value;
+					if (openedNode.m_cell.Equals(nextPath.m_cell))
+					{
+						if (nextPath.m_stepsFromStart < openedNode.m_stepsFromStart)
+						{
+							openCells.Remove(iterator.Key);
+						}
+						else
+						{
+							cellProcessed = true;
+						}
+						break;
+					}                   
+				}
+
+				if (cellProcessed)
+					continue;
+
+				foreach (PathNode closedNode in closedCells)
+				{
+					if (closedNode.m_cell.Equals(nextPath.m_cell))
+					{
+						cellProcessed = true;
+						break;
+					}
+				}
+
+				if (cellProcessed)
+					continue;
+
+				nextPath.m_heuristicRating = heuristicRating(nextCell, endCell);
+				openCells.Add(nextPath.m_priority, nextPath);
+			}
+		}
+
+		if (pathFound)
+		{
+			path = new Cell[closedCells.Count];
+			PathNode curPath = endPath;
+			for (int i = closedCells.Count - 1; i >= 0; --i)
+			{
+				path[i] = curPath.m_cell;
+
+				if (!curPath.m_parentCell.HasValue)
+				{
+					//error in buildPath
+					path = null;
+					return false;
+				}
+				curPath.m_cell = curPath.m_parentCell.Value;
+			}
+			return true;
+		}
+		else
+		{
+			path = null;
+			return false;
+		}
 	}
 
 	void reallocate()
