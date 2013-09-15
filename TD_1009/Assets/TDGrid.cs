@@ -135,12 +135,12 @@ public class TDGrid
 		return successors;
 	}
 
-	// EuclideanNoSQR distance to end cell
+    // Manhattan distance to end cell
 	int heuristicRating(Cell curCell, Cell endCell)
 	{
 		int di = (int)(curCell.m_i - endCell.m_i);
 		int dj = (int)(curCell.m_j - endCell.m_j);
-		int rating = di*di + dj*dj;
+        int rating = System.Math.Abs(di) + System.Math.Abs(dj);
 		return rating;
 	}
 
