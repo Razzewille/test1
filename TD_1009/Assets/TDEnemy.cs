@@ -19,12 +19,23 @@ public abstract class TDEnemy : MonoBehaviour {
 		GameObject enemyHealthPrefab = (GameObject) Resources.Load("EnemyHealthBarPrefab");
 		m_healthBar = (GameObject) Instantiate(enemyHealthPrefab, new Vector3(0.5f, 0.5f), new Quaternion());
 		updateHealthBar();
+		updatePath();
+		m_currentPathCell = 0;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		GameObject player = TDWorld.getWorld().getPlayer();
-		Vector3 dir = player.transform.position - gameObject.transform.position;
+		TDWorld world = TDWorld.getWorld();
+		GameObject player = world.getPlayer();
+		
+		if (null == m_path)
+			return;
+
+		if (m_currentPathCell >= m_path.Length - 1)
+			return;
+		
+		Vector3 nextCellPos = world.from2dTo3d(world.m_grid.getCenter(m_path[m_currentPathCell + 1]));
+		Vector3 dir = nextCellPos - transform.position;
 		dir.y = 0;
 
 		Bounds b = gameObject.renderer.bounds;
@@ -37,13 +48,13 @@ public abstract class TDEnemy : MonoBehaviour {
 		pdeltab.y = 0;
 		float pdelta = 0.5f*pdeltab.magnitude;
 
-		if (dir.magnitude < delta + pdelta)
-		{
-			TDPlayer tdPlayer = TDWorld.getWorld().getTDPlayer();
-			tdPlayer.receiveDamage(1);
-			Destroy(gameObject);
-			return;
-		}
+// 		if (dir.magnitude < delta + pdelta)
+// 		{
+// 			TDPlayer tdPlayer = TDWorld.getWorld().getTDPlayer();
+// 			tdPlayer.receiveDamage(1);
+// 			Destroy(gameObject);
+// 			return;
+// 		}
 		Vector3 otherDir = dir;
 		if (Mathf.Abs(dir.x) > Mathf.Abs(dir.z))
 		{
@@ -69,6 +80,9 @@ public abstract class TDEnemy : MonoBehaviour {
 		dir *= getSpeed()*Time.deltaTime;
 
 		transform.Translate(dir);
+
+		if ( (world.from3dTo2d(transform.position) - world.from3dTo2d(nextCellPos)).magnitude < 0.5 )
+			++m_currentPathCell;
 		
 		updateHealthBar();
 	}
@@ -100,12 +114,26 @@ public abstract class TDEnemy : MonoBehaviour {
 		}
 	}
 
+	void updatePath()
+	{
+		TDWorld world = TDWorld.getWorld();
+		TDGrid grid = world.m_grid;
+		TDGrid.Cell startCell = grid.getCell(world.from3dTo2d(gameObject.transform.position));
+		TDGrid.Cell endCell = grid.getCell(world.from3dTo2d(world.getPlayer().transform.position));
+		bool pathExists = grid.buildPath(startCell, endCell, out m_path);
+		if (!pathExists)
+		{
+			//error
+		}
+	}
+
 	public abstract Type type();
 
 	public abstract uint getStartHP();
 	public abstract float getSpeed();
 	public abstract Color getColor();
 	
+	int m_currentPathCell;
 	TDGrid.Cell[] m_path;
 	
 	int m_maxHP;

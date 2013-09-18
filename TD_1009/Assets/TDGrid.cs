@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TDGrid
 {
@@ -96,7 +97,7 @@ public class TDGrid
 	class PathNode
 	{
 		public Cell m_cell;
-		public Cell? m_parentCell;
+		public PathNode m_parentNode;
 
 		public int m_stepsFromStart; 
 		public int m_heuristicRating;
@@ -122,7 +123,7 @@ public class TDGrid
 
 			if ( (0 <= posI) && (0 <= posJ) && (m_ncx > posI) && (m_ncy > posJ))
 			{
-				if (CellState.eFree != m_aCells[posI, posJ])
+				if (CellState.eBusy == m_aCells[posI, posJ])
 					continue;
 
 				Cell cell = new Cell();
@@ -135,41 +136,50 @@ public class TDGrid
 		return successors;
 	}
 
-    // Manhattan distance to end cell
+	// Manhattan distance to end cell
 	int heuristicRating(Cell curCell, Cell endCell)
 	{
 		int di = (int)(curCell.m_i - endCell.m_i);
 		int dj = (int)(curCell.m_j - endCell.m_j);
-        int rating = System.Math.Abs(di) + System.Math.Abs(dj);
+		int rating = System.Math.Abs(di) + System.Math.Abs(dj);
 		return rating;
 	}
 
-	bool buildPath(Cell startCell, Cell endCell, out Cell[] path)
+	public bool buildPath(Cell startCell, Cell endCell, out Cell[] path)
 	{
 		List<PathNode> closedCells = new List<PathNode>();
-		SortedDictionary<int, PathNode> openCells = new SortedDictionary<int, PathNode>(); // int - priority
+		SortedDictionary<int, List<PathNode>> openCells = new SortedDictionary<int, List<PathNode>>(); // int - priority
 		
 		PathNode startPath = new PathNode();
 		startPath.m_cell = startCell;
-		startPath.m_parentCell = null;
+		startPath.m_parentNode = null;
 		startPath.m_stepsFromStart = 0;
 		startPath.m_heuristicRating = heuristicRating(startCell, endCell);
-		openCells.Add(startPath.m_priority, startPath);
+
+		List<PathNode> startList = new List<PathNode>();
+		startList.Add(startPath);
+		openCells.Add(startPath.m_priority, startList);
 
 		bool pathFound = false;
-		PathNode endPath = null;
-
+		PathNode endPathNode = null;
+		
 		while (0 < openCells.Count)
 		{
-			KeyValuePair<int, PathNode> priorityPath = openCells.GetEnumerator().Current;
-			PathNode parentNode = priorityPath.Value;
+			int key = openCells.Keys.First();            
+			List<PathNode> parentListNodes = openCells[key];
+			PathNode parentNode = parentListNodes.First();
 
 			closedCells.Add(parentNode);
-			openCells.Remove(priorityPath.Key);
+			parentListNodes.RemoveAt(0);
+			if (0 == parentListNodes.Count)
+			{
+				openCells.Remove(key);
+			}
+			
 			if (endCell.Equals(parentNode.m_cell))
 			{
 				pathFound = true;
-				endPath = parentNode;
+				endPathNode = parentNode;
 				break;
 			}
 
@@ -178,25 +188,32 @@ public class TDGrid
 			{
 				PathNode nextPath = new PathNode();
 				nextPath.m_cell = nextCell;
-				nextPath.m_parentCell = parentNode.m_cell;
+				nextPath.m_parentNode = parentNode;
 				nextPath.m_stepsFromStart = parentNode.m_stepsFromStart + 1;
 
 				bool cellProcessed = false;
-				foreach (KeyValuePair<int, PathNode> iterator in openCells)
+				foreach (KeyValuePair<int, List<PathNode>> iterator in openCells)
 				{
-					PathNode openedNode = iterator.Value;
-					if (openedNode.m_cell.Equals(nextPath.m_cell))
+					bool stop = false;
+					List<PathNode> listNodes = iterator.Value;
+					foreach (PathNode openedNode in listNodes)
 					{
-						if (nextPath.m_stepsFromStart < openedNode.m_stepsFromStart)
+						if (openedNode.m_cell.Equals(nextPath.m_cell))
 						{
-							openCells.Remove(iterator.Key);
-						}
-						else
-						{
-							cellProcessed = true;
-						}
+							if (nextPath.m_stepsFromStart < openedNode.m_stepsFromStart)
+							{
+								openCells.Remove(iterator.Key);
+							}
+							else
+							{
+								cellProcessed = true;
+							}
+							stop = true;
+							break;
+						}   
+					}
+					if (stop)
 						break;
-					}                   
 				}
 
 				if (cellProcessed)
@@ -215,25 +232,28 @@ public class TDGrid
 					continue;
 
 				nextPath.m_heuristicRating = heuristicRating(nextCell, endCell);
-				openCells.Add(nextPath.m_priority, nextPath);
+
+				if (openCells.ContainsKey(nextPath.m_priority))
+				{
+					openCells[nextPath.m_priority].Add(nextPath);
+				}
+				else 
+				{
+					List<PathNode> listNode = new List<PathNode>();
+					listNode.Add(nextPath);
+					openCells.Add(nextPath.m_priority, listNode);
+				}
 			}
 		}
 
 		if (pathFound)
 		{
-			path = new Cell[closedCells.Count];
-			PathNode curPath = endPath;
-			for (int i = closedCells.Count - 1; i >= 0; --i)
+			path = new Cell[endPathNode.m_stepsFromStart+1];
+			PathNode curNode = endPathNode;
+			for (int i = path.Length - 1; i >= 0; --i)
 			{
-				path[i] = curPath.m_cell;
-
-				if (!curPath.m_parentCell.HasValue)
-				{
-					//error in buildPath
-					path = null;
-					return false;
-				}
-				curPath.m_cell = curPath.m_parentCell.Value;
+				path[i] = curNode.m_cell;
+				curNode = curNode.m_parentNode;
 			}
 			return true;
 		}
