@@ -274,8 +274,8 @@ public class TDGrid
 
 	void recalcGrid()
 	{
-		m_gridX = m_length/(float)m_ncy;
-		m_gridY = m_length/(float)m_ncy;
+		m_gridX = m_length/(float)m_ncx;
+		m_gridY = m_width/(float)m_ncy;
 	}
 
 	CellState[,] m_aCells;

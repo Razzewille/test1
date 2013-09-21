@@ -52,6 +52,7 @@ public class TDWorld : MonoBehaviour {
 			addTree(pos);
 			treesBuilt++;
 		}
+
 	}
 
 	// Use this for initialization
