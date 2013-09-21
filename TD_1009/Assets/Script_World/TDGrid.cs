@@ -52,8 +52,7 @@ public class TDGrid
 	public enum CellState {eFree = 0, eBusy, ePlayer, eEnemyRespawn};
 	public struct Cell
 	{
-		Cell(uint i, uint j) {m_i = i; m_j = j; pos = new Vector2();}
-		public Vector2 pos;
+		Cell(uint i, uint j) {m_i = i; m_j = j;}
 		public uint m_i, m_j;
 	}
 
@@ -143,6 +142,14 @@ public class TDGrid
 		int dj = (int)(curCell.m_j - endCell.m_j);
 		int rating = System.Math.Abs(di) + System.Math.Abs(dj);
 		return rating;
+	}
+
+	public bool buildAirPath(Cell startCell, Cell endCell, out Cell[] path)
+	{
+		path = new Cell[2];
+		path[0] = startCell;
+		path[1] = endCell;
+		return true;
 	}
 
 	public bool buildPath(Cell startCell, Cell endCell, out Cell[] path)

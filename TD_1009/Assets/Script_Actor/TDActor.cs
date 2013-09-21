@@ -28,6 +28,23 @@ public abstract class TDActor : MonoBehaviour {
 		}
 	}
 
+	protected abstract bool canFly();
+	protected abstract float flyHeight();
+	
+	// Caches the path in case of success
+	public bool hasPathTo(GameObject target)
+	{
+		return buildPath(target);
+	}
+	
+    // Returns false if target is not reachable
+	public bool walkByPath()
+	{
+		return false;
+	}
+
+	protected abstract void onTargetReached(GameObject obj);
+
 	void die()
 	{
 		Destroy(gameObject);
@@ -45,11 +62,25 @@ public abstract class TDActor : MonoBehaviour {
 	{
 		m_HP -= (1.0f - getResistance(type))*val;
 	}
-
 	public abstract float getResistance(TDDamage.Type type);
 
-	public abstract Color getColor();
+	bool buildPath(GameObject target)
+	{
+		TDWorld world = TDWorld.getWorld();
+		TDGrid grid = world.m_grid;
+		TDGrid.Cell startCell = grid.getCell(world.from3dTo2d(gameObject.transform.position));
+		TDGrid.Cell endCell = grid.getCell(world.from3dTo2d(target.transform.position));
+		bool pathExists = false;
+		if (canFly())
+			pathExists = grid.buildAirPath(startCell, endCell, out m_path);
+		else
+			pathExists = grid.buildPath(startCell, endCell, out m_path);
+		return pathExists;
+	}
 
 	protected List<TDModifier> m_aModifier;
 	protected float m_HP;
+
+	int m_currentPathCell;
+	TDGrid.Cell[] m_path;
 }
