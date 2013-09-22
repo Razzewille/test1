@@ -8,6 +8,8 @@ drawPath             = 1
 gridNbCellsX         = 24
 gridNbCellsY         = 8
 
+hitDistance          = 0.1
+
 nbTrees              = 30
 
 playerHP             = 10

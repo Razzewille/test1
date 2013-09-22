@@ -13,6 +13,8 @@ public class TDConfiguration
 		gridNbCellsX = 20;
 		gridNbCellsY = 20;
 
+		hitDistance = 0.3f;
+
 		playerHP             = 10;
 		
 		// Enemies
@@ -90,6 +92,8 @@ public class TDConfiguration
 	public uint drawPath; // Draws paths for enemies
 	public uint gridNbCellsX;
 	public uint gridNbCellsY;
+
+	public float hitDistance;
 
 	public uint nbTrees;
 
