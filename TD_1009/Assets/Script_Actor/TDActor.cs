@@ -4,15 +4,17 @@ using System.Collections.Generic;
 public abstract class TDActor : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	protected virtual void Start () {
 		m_HP = (int) getStartHP();
 		m_path = null;
 		m_currentCellIndex = -1;
+		m_aModifier = new List<TDModifier>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected virtual void Update () {
 		m_momentalSpeedFactor = 1.0f;
+		List<TDModifier> itemsToRemove = new List<TDModifier>();
 		foreach (TDModifier m in m_aModifier)
 		{
 			if (m != null)
@@ -24,13 +26,17 @@ public abstract class TDActor : MonoBehaviour {
 					break;
 				}
 				if (m.finished())
-					m_aModifier.Remove(m);
+					itemsToRemove.Add(m);
 			}
 			else
-				m_aModifier.Remove(m);
+				itemsToRemove.Add(m);
 		}
 
-	
+		foreach (TDModifier m in itemsToRemove)
+			m_aModifier.Remove(m);
+
+		if (m_path != null)
+			walkByPath();
 	}
 
 	protected abstract bool canFly();
@@ -60,21 +66,22 @@ public abstract class TDActor : MonoBehaviour {
 		}
 
 		TDWorld world = TDWorld.getWorld();
-		GameObject player = world.getPlayer();
-
 		int cellTo = (m_currentCellIndex == m_path.Length - 1) ? m_currentCellIndex : (m_currentCellIndex + 1);
 
 		Vector3 nextCellPos = world.from2dTo3d(world.m_grid.getCenter(m_path[cellTo]));
 		Vector3 dir = nextCellPos - transform.position;
 		dir.y = 0;
-
-		if (Mathf.Abs(dir.x) > Mathf.Abs(dir.z))
+		
+		if (!canFly())
 		{
-			dir.z = 0;
-		}
-		else
-		{
-			dir.x = 0;
+			if (Mathf.Abs(dir.x) > Mathf.Abs(dir.z))
+			{
+				dir.z = 0;
+			}
+			else
+			{
+				dir.x = 0;
+			}
 		}
 		dir.Normalize();
 

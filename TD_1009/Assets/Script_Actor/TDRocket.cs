@@ -20,7 +20,11 @@ public class TDRocket : MonoBehaviour {
 		{
 			TDEnemy enemy = TDWorld.getWorld().getTDEnemy(m_target);
 			if (enemy != null)
-				enemy.receiveDamage(m_damage);
+			{
+				TDDamage damage = new TDDamage(TDDamage.Type.ePhysical, m_damage, 0f);
+				damage.setTarget(enemy);
+				enemy.receiveDamage(damage);
+			}
 			Destroy(gameObject);
 		}
 		else

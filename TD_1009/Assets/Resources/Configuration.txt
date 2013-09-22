@@ -18,12 +18,12 @@ playerHP             = 10
 enemyHP              = 30
 killReward           = 20
 // units/sec
-enemySpeed           = 20.0
+enemySpeed           = 8.0
 
 bossEnemyHP          = 600
 bossKillReward       = 30
 // units/sec
-bossEnemySpeed       = 15.0
+bossEnemySpeed       = 5.0
 
 //Towers
 towerDamage          = 3
