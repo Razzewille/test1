@@ -5,8 +5,8 @@ public abstract class TDEnemy : TDActor {
 
 	public enum Type
 	{
-		eBasic = 0,
-		eBoss  = 1
+		eImp = 0,
+		eGargoyle  = 1
 	};
 
 	public delegate void EventHandler(TDEnemy enemy);
@@ -15,7 +15,6 @@ public abstract class TDEnemy : TDActor {
 	// Use this for initialization
 	protected override void Start () {
 		base.Start();
-		gameObject.renderer.material.color = getColor();
 		GameObject enemyHealthPrefab = (GameObject) Resources.Load("EnemyHealthBarPrefab");
 		m_healthBar = (GameObject) Instantiate(enemyHealthPrefab, new Vector3(0.5f, 0.5f), new Quaternion());
 		updateHealthBar();
@@ -65,9 +64,6 @@ public abstract class TDEnemy : TDActor {
 	{
 	}
 
-	public abstract Type type();
-
-	public abstract Color getColor();
 
 	GameObject m_healthBar;
 }

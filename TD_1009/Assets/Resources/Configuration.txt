@@ -20,7 +20,7 @@ killReward           = 20
 // units/sec
 enemySpeed           = 8.0
 
-bossEnemyHP          = 600
+bossEnemyHP          = 50
 bossKillReward       = 30
 // units/sec
 bossEnemySpeed       = 5.0

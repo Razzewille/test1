@@ -70,10 +70,10 @@ public class TDWorld : MonoBehaviour {
 			GameObject [] aRespawnPoint = getAllEnemyRespawnPoints();
 			uint respawnIndex = (uint)(Random.value*aRespawnPoint.Length);
 			Vector3 pos = aRespawnPoint[respawnIndex].transform.position;
-			if (Random.value < 0.05)
-				addEnemy(TDEnemy.Type.eBoss, pos);
+			if (Random.value < 0.3)
+				addEnemy(TDEnemy.Type.eGargoyle, pos);
 			else
-				addEnemy(TDEnemy.Type.eBasic, pos);
+				addEnemy(TDEnemy.Type.eImp, pos);
 			m_startTime = (int) ((float)(m_frequency)*Time.time);
 		}
 		if (Input.GetMouseButtonDown(0))
@@ -217,11 +217,11 @@ public class TDWorld : MonoBehaviour {
 		GameObject enemy = null;
 		switch (type)
 		{
-			case TDEnemy.Type.eBasic:
-				enemy = (GameObject) Instantiate(m_prefabBasicEnemy, pos, Quaternion.identity);
+			case TDEnemy.Type.eImp:
+				enemy = (GameObject) Instantiate(m_prefabEnemyImp, pos, Quaternion.identity);
 				break;
-			case TDEnemy.Type.eBoss:
-				enemy = (GameObject) Instantiate(m_prefabBossEnemy, pos, Quaternion.identity);
+			case TDEnemy.Type.eGargoyle:
+				enemy = (GameObject) Instantiate(m_prefabEnemyGargoyle, pos, Quaternion.identity);
 				break;
 				
 		}
@@ -283,8 +283,8 @@ public class TDWorld : MonoBehaviour {
 	public TDTowerStrategy m_strategy;
 	public TDGrid m_grid;
 
-	public GameObject m_prefabBasicEnemy;
-	public GameObject m_prefabBossEnemy;
+	public GameObject m_prefabEnemyImp;
+	public GameObject m_prefabEnemyGargoyle;
 	public GameObject m_prefabBasicTower;
 	public GameObject m_prefabUberTower;
 	public GameObject m_prefabRocket;
