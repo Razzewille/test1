@@ -15,26 +15,21 @@ nbTrees              = 30
 playerHP             = 10
 
 // Enemies
-enemyHP              = 30
-killReward           = 20
-// units/sec
-enemySpeed           = 8.0
+enemyImpHP           = 30
+enemyImpKillReward   = 20
+enemyImpSpeed        = 8.0
 
-bossEnemyHP          = 50
-bossKillReward       = 30
-// units/sec
-bossEnemySpeed       = 5.0
+enemyGargoyleHP         = 50
+enemyGargoyleKillReward  = 30
+enemyGargoyleSpeed       = 5.0
 
 //Towers
-towerDamage          = 3
-// units/sec
-towerRocketSpeed     = 40.0
-towerRestoration     = 0.3
-// sec
-towerEfficientRadius = 30.0
+towerArcherPhysicalDamage  = 3
+towerArcherProjectileSpeed = 40.0
+towerArcherRestoration     = 0.3
+towerArcherRadius          = 30.0
 
-uberTowerDamage      = 12
-uberTowerRocketSpeed = 95.0
-// sec
-uberTowerRestoration = 0.1
-uberTowerEfficientRadius = 45.0
+towerCanonPhysicalDamage  = 12
+towerCanonProjectileSpeed = 40.0
+towerCanonRestoration     = 0.3
+towerCanonRadius          = 30.0

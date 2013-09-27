@@ -3,25 +3,25 @@ using System.Collections.Generic;
 
 public class TDTowerStrategy
 {
-	public bool shouldShootAt(TDEnemy enemy, uint potentialDamage)
+	public bool shouldShootAt(TDEnemy enemy, TDDamage potentialDamage)
 	{
 		if (m_followedEnemies == null)
-			m_followedEnemies = new Dictionary<TDEnemy, uint>();
+			m_followedEnemies = new Dictionary<TDEnemy, float>();
 		if (!m_followedEnemies.ContainsKey(enemy))
 		{
 			m_followedEnemies[enemy] = 0;
 			enemy.OnEventDestroy += destroyCallback;
 			return true;
 		}
-		uint followedDamage = m_followedEnemies[enemy];
+		float followedDamage = m_followedEnemies[enemy];
 		if (followedDamage > enemy.getStartHP())
 			return false;
 		return true;
 	}
 
-	public void shootingAt(TDEnemy enemy, uint potentialDamage)
+	public void shootingAt(TDEnemy enemy, TDDamage potentialDamage)
 	{
-		m_followedEnemies[enemy] += potentialDamage;
+		m_followedEnemies[enemy] += potentialDamage.estimatedFirstDamage();
 	}
 
 	void destroyCallback(TDEnemy enemy)
@@ -33,5 +33,5 @@ public class TDTowerStrategy
 		}
 	}
 	
-	Dictionary<TDEnemy, uint> m_followedEnemies;
+	Dictionary<TDEnemy, float> m_followedEnemies;
 }

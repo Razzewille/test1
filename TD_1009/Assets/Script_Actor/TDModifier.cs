@@ -74,6 +74,11 @@ public class TDDamage : TDModifier
 		m_target.receiveDamage(m_type, m_contDamagePerSec*Time.deltaTime);
 	}
 
+	public float estimatedFirstDamage()
+	{
+		return m_firstDamage;
+	}
+
 	Type m_type;
 	float m_firstDamage;
 	float m_contDamagePerSec;

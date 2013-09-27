@@ -16,26 +16,7 @@ public class TDConfiguration
 		hitDistance = 0.3f;
 
 		playerHP             = 10;
-		
-		// Enemies
-		enemyHP              = 10;
-		killReward           = 20;
-		enemySpeed           = 9.0f; // units/sec
-		
-		bossEnemyHP          = 20;
-		bossKillReward       = 30;
-		bossEnemySpeed       = 6.0f;// units/sec
-		
-		//Towers
-		towerDamage          = 3;
-		towerRocketSpeed     = 12.0f; // units/sec
-		towerRestoration 	 = 0.3f; // sec
-		towerEfficientRadius = 30f;
-		
-		uberTowerDamage      = 6;
-		uberTowerRocketSpeed = 18.0f;
-		uberTowerRestoration = 0.1f; // sec
-		uberTowerEfficientRadius = 70f;
+
 	}
 
 	public void readFromResource()
@@ -98,24 +79,23 @@ public class TDConfiguration
 	public uint nbTrees;
 
 	public uint playerHP;
+		
+	public uint enemyImpHP;
+	public float enemyImpKillReward;
+	public float enemyImpSpeed;
 	
-	// Enemies
-	public uint  enemyHP;
-	public uint  killReward;
-	public float enemySpeed; // units/sec
-	
-	public uint  bossEnemyHP;
-	public uint  bossKillReward;
-	public float bossEnemySpeed;// units/sec
+	public uint enemyGargoyleHP;
+	public float enemyGargoyleKillReward;
+	public float enemyGargoyleSpeed;
 	
 	//Towers
-	public uint  towerDamage;
-	public float towerRocketSpeed; // units/sec
-	public float towerRestoration; // sec
-	public float towerEfficientRadius;
+	public float towerArcherPhysicalDamage;
+	public float towerArcherProjectileSpeed;
+	public float towerArcherRestoration;
+	public float towerArcherRadius;
 	
-	public uint  uberTowerDamage;
-	public float uberTowerRocketSpeed;
-	public float uberTowerRestoration; // sec
-	public float uberTowerEfficientRadius;
+	public float towerCanonPhysicalDamage;
+	public float towerCanonProjectileSpeed;
+	public float towerCanonRestoration;
+	public float towerCanonRadius;
 }

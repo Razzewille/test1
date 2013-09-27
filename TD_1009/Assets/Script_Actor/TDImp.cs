@@ -5,11 +5,11 @@ public class TDImp : TDEnemy {
 
 	public override uint getStartHP()
 	{
-		return TDWorld.getWorld().m_configuration.enemyHP;
+		return TDWorld.getWorld().m_configuration.enemyImpHP;
 	}
 	public override float getStartSpeed()
 	{
-		return TDWorld.getWorld().m_configuration.enemySpeed;
+		return TDWorld.getWorld().m_configuration.enemyImpSpeed;
 	}
 	protected override bool canFly()
 	{

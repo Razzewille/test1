@@ -5,11 +5,11 @@ public class TDGargoyle : TDEnemy {
 
 	public override uint getStartHP()
 	{
-		return TDWorld.getWorld().m_configuration.bossEnemyHP;
+		return TDWorld.getWorld().m_configuration.enemyGargoyleHP;
 	}
 	public override float getStartSpeed()
 	{
-		return TDWorld.getWorld().m_configuration.bossEnemySpeed;
+		return TDWorld.getWorld().m_configuration.enemyGargoyleSpeed;
 	}
 	protected override bool canFly()
 	{

@@ -90,9 +90,9 @@ public class TDWorld : MonoBehaviour {
 					{
 						occupyPosition(pos, TDGrid.CellState.eBusy);
 						if (Random.value < 0.3)
-							addTower(TDTower.Type.eUber, pos);
+							addTower(TDTower.Type.eArrowTower, pos);
 						else
-							addTower(TDTower.Type.eBasic, pos);
+							addTower(TDTower.Type.eCanonTower, pos);
 						m_created++;
 						m_frequency = (5*m_created)/10 + 1;
 					}
@@ -135,12 +135,7 @@ public class TDWorld : MonoBehaviour {
 		return (TDEnemy) obj.GetComponent("TDEnemy");
 	}
 
-	public TDRocket getTDRocket(GameObject obj)
-	{
-		return (TDRocket) obj.GetComponent("TDRocket");
-	}
-	
-    // May contain incomplete list or some deleted entries
+	// May contain incomplete list or some deleted entries
 	public GameObject [] getAllEnemiesUnsafe()
 	{
 		if (m_aCachedEnemies == null)
@@ -233,35 +228,15 @@ public class TDWorld : MonoBehaviour {
 		GameObject tower = null;
 		switch (type)
 		{
-			case TDTower.Type.eBasic:
-				tower = (GameObject) Instantiate(m_prefabBasicTower, pos, Quaternion.identity);
+			case TDTower.Type.eArrowTower:
+				tower = (GameObject) Instantiate(m_prefabArrowTower, pos, Quaternion.identity);
 				break;
-			case TDTower.Type.eUber:
-				tower = (GameObject) Instantiate(m_prefabUberTower, pos, Quaternion.identity);
+			case TDTower.Type.eCanonTower:
+				tower = (GameObject) Instantiate(m_prefabCanonTower, pos, Quaternion.identity);
 				break;
 				
 		}
 		return tower;
-	}
-	
-
-	public GameObject addRocket(TDTower.Type towerType, Vector3 pos)
-	{
-		GameObject rocket = (GameObject) Instantiate(m_prefabRocket, pos, Quaternion.identity);
-		TDRocket tdRocket = getTDRocket(rocket);
-		switch (towerType)
-		{
-			case TDTower.Type.eBasic:
-				tdRocket.m_damage = m_configuration.towerDamage;
-				tdRocket.m_speed = m_configuration.towerRocketSpeed;
-				break;
-			case TDTower.Type.eUber:
-				tdRocket.m_damage = m_configuration.uberTowerDamage;
-				tdRocket.m_speed = m_configuration.uberTowerRocketSpeed;
-				break;
-				
-		}
-		return rocket;
 	}
 
 	public GameObject addTree(Vector3 pos)
@@ -285,9 +260,9 @@ public class TDWorld : MonoBehaviour {
 
 	public GameObject m_prefabEnemyImp;
 	public GameObject m_prefabEnemyGargoyle;
-	public GameObject m_prefabBasicTower;
-	public GameObject m_prefabUberTower;
-	public GameObject m_prefabRocket;
+
+	public GameObject m_prefabArrowTower;
+	public GameObject m_prefabCanonTower;
 	public GameObject m_prefabTree;
 
 	int m_created;

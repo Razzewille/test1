@@ -5,14 +5,13 @@ public abstract class TDTower : MonoBehaviour {
 
 	public enum Type
 	{
-		eBasic = 0,
-		eUber  = 1
+		eArrowTower = 0,
+		eCanonTower = 1
 	}
 
 	// Use this for initialization
 	void Start () {
 		m_restTime = Time.time;
-		gameObject.renderer.material.color = getColor();
 	}
 	
 	// Update is called once per frame
@@ -24,6 +23,7 @@ public abstract class TDTower : MonoBehaviour {
 		GameObject [] aAllEnemies = TDWorld.getWorld().getAllEnemiesUnsafe();
 		double recDist = -1;
 		GameObject recObject = null;
+		TDDamage damage = getTowerDamage();
 		foreach(GameObject thisObject in aAllEnemies)
 		{
 			if (thisObject == null)
@@ -33,7 +33,7 @@ public abstract class TDTower : MonoBehaviour {
 		   	if (dist < efficientRadius)
 			{
 				TDEnemy enemy = TDWorld.getWorld().getTDEnemy(thisObject);
-				if (!TDWorld.getWorld().m_strategy.shouldShootAt(enemy, getTowerDamage()))
+				if (!TDWorld.getWorld().m_strategy.shouldShootAt(enemy, damage))
 					continue;
 				if ((recDist < 0) || (recDist > dist))
 				{
@@ -45,19 +45,24 @@ public abstract class TDTower : MonoBehaviour {
 		if (recObject == null)
 			return;
 		TDEnemy recEnemy = TDWorld.getWorld().getTDEnemy(recObject);
-		TDWorld.getWorld().m_strategy.shootingAt(recEnemy, getTowerDamage());
-		GameObject rocket = TDWorld.getWorld().addRocket(type(), transform.position);
-		TDRocket rocketScript = (TDRocket) rocket.GetComponent("TDRocket");
-		rocketScript.m_target = recObject;
+		TDWorld.getWorld().m_strategy.shootingAt(recEnemy, damage);
+		shootTo(recEnemy);
 		m_restTime = Time.time;
 	}
 
-	public abstract Type type();
-
-	public abstract uint getTowerDamage();
-	public abstract float getRocketSpeed();
 	public abstract float getRestoration();
 	public abstract float getEfficientRadius();
-	protected abstract Color getColor();
+	public abstract TDProjectile createProjectile();
+
+	public abstract TDDamage getTowerDamage();
+	public void shootTo(TDActor actor)
+	{
+		TDDamage damage = getTowerDamage();
+		damage.setTarget(actor);
+		TDProjectile projectile = createProjectile();
+		projectile.m_damage = damage;
+		projectile.m_target = actor;
+	}
+
 	float m_restTime;
 }
