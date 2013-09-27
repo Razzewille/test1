@@ -47,6 +47,13 @@ public class TDDamage : TDModifier
 	 	eElectricity = 3
 	}
 
+	public TDDamage clone(TDActor target)
+	{
+		TDDamage newDamage = new TDDamage(m_type, m_firstDamage, m_contDamagePerSec);
+		newDamage.setTarget(target);
+		return newDamage;
+	}
+
 	public TDDamage(Type type, float firstDamage, float contDamagePerSec)
 	{
 		m_type = type;

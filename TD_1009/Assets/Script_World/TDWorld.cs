@@ -89,7 +89,7 @@ public class TDWorld : MonoBehaviour {
 					if (TDGrid.CellState.eFree == positionState(pos))
 					{
 						occupyPosition(pos, TDGrid.CellState.eBusy);
-						if (Random.value < 0.3)
+						if (Random.value < 0.8)
 							addTower(TDTower.Type.eArrowTower, pos);
 						else
 							addTower(TDTower.Type.eCanonTower, pos);

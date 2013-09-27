@@ -33,6 +33,9 @@ public abstract class TDTower : MonoBehaviour {
 		   	if (dist < efficientRadius)
 			{
 				TDEnemy enemy = TDWorld.getWorld().getTDEnemy(thisObject);
+				if (enemy.canFly())
+					if (!shootsFlying())
+						continue;
 				if (!TDWorld.getWorld().m_strategy.shouldShootAt(enemy, damage))
 					continue;
 				if ((recDist < 0) || (recDist > dist))
@@ -53,6 +56,7 @@ public abstract class TDTower : MonoBehaviour {
 	public abstract float getRestoration();
 	public abstract float getEfficientRadius();
 	public abstract TDProjectile createProjectile();
+	public abstract bool shootsFlying();
 
 	public abstract TDDamage getTowerDamage();
 	public void shootTo(TDActor actor)
@@ -61,7 +65,7 @@ public abstract class TDTower : MonoBehaviour {
 		damage.setTarget(actor);
 		TDProjectile projectile = createProjectile();
 		projectile.m_damage = damage;
-		projectile.m_target = actor;
+		projectile.setTarget(actor);
 	}
 
 	float m_restTime;

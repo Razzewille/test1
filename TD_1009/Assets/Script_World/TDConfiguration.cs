@@ -96,6 +96,8 @@ public class TDConfiguration
 	
 	public float towerCanonPhysicalDamage;
 	public float towerCanonProjectileSpeed;
+	public float towerCanonBallDamageRadius;
+	public float towerCanonBallParabolaHeight;
 	public float towerCanonRestoration;
 	public float towerCanonRadius;
 }

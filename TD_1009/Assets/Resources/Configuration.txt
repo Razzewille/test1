@@ -15,11 +15,11 @@ nbTrees              = 30
 playerHP             = 10
 
 // Enemies
-enemyImpHP           = 30
+enemyImpHP           = 50
 enemyImpKillReward   = 20
 enemyImpSpeed        = 8.0
 
-enemyGargoyleHP         = 50
+enemyGargoyleHP         = 20
 enemyGargoyleKillReward  = 30
 enemyGargoyleSpeed       = 5.0
 
@@ -29,7 +29,9 @@ towerArcherProjectileSpeed = 40.0
 towerArcherRestoration     = 0.3
 towerArcherRadius          = 30.0
 
-towerCanonPhysicalDamage  = 12
-towerCanonProjectileSpeed = 40.0
-towerCanonRestoration     = 0.3
-towerCanonRadius          = 30.0
+towerCanonPhysicalDamage     = 9
+towerCanonProjectileSpeed    = 15.0
+towerCanonBallDamageRadius   = 10.0
+towerCanonBallParabolaHeight = 5.0
+towerCanonRestoration        = 1.0
+towerCanonRadius             = 15.0

@@ -11,7 +11,7 @@ public class TDGargoyle : TDEnemy {
 	{
 		return TDWorld.getWorld().m_configuration.enemyGargoyleSpeed;
 	}
-	protected override bool canFly()
+	public override bool canFly()
 	{
 		return true;
 	}

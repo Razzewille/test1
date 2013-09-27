@@ -20,5 +20,9 @@ public class TDArrowTower : TDTower
 	{
 		return new TDDamage(TDDamage.Type.ePhysical, TDWorld.getWorld().m_configuration.towerArcherPhysicalDamage, 0);
 	}
+	public override bool shootsFlying()
+	{
+		return true;
+	}
 	public GameObject m_prefabArrow;
 }

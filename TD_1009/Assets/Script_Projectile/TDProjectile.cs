@@ -23,10 +23,15 @@ public abstract class TDProjectile : MonoBehaviour {
 		}
 	}
 
+	public virtual void setTarget(TDActor target)
+	{
+		m_target = target;
+	}
+
 	public abstract float speed();
 	public abstract void moveToTarget();
 	public abstract void onTargetReached();
 	
 	public TDDamage m_damage;
-	public TDActor m_target;
+	protected TDActor m_target;
 }

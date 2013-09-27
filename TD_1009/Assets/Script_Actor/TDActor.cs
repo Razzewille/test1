@@ -39,7 +39,7 @@ public abstract class TDActor : MonoBehaviour {
 			walkByPath();
 	}
 
-	protected abstract bool canFly();
+	public abstract bool canFly();
 	protected abstract float flyHeight();
 	
 	// Caches the path in case of success

@@ -11,7 +11,7 @@ public class TDImp : TDEnemy {
 	{
 		return TDWorld.getWorld().m_configuration.enemyImpSpeed;
 	}
-	protected override bool canFly()
+	public override bool canFly()
 	{
 		return false;
 	}
