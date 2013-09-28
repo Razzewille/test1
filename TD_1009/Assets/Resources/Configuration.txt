@@ -33,5 +33,5 @@ towerCanonPhysicalDamage     = 9
 towerCanonProjectileSpeed    = 15.0
 towerCanonBallDamageRadius   = 10.0
 towerCanonBallParabolaHeight = 5.0
-towerCanonRestoration        = 1.0
+towerCanonRestoration        = 0.6
 towerCanonRadius             = 15.0
