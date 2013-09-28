@@ -65,6 +65,8 @@ public class TDCanonBall : TDProjectile {
 			if ((thisObject.transform.position - explodePosition).magnitude > TDWorld.getWorld().m_configuration.towerCanonBallDamageRadius)
 				continue;
 			TDEnemy enemy = TDWorld.getWorld().getTDEnemy(thisObject);
+			if (enemy == null)
+				continue;
 			if (enemy.canFly())
 				continue;
 			enemy.receiveDamage(m_damage.clone(enemy));

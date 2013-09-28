@@ -12,13 +12,13 @@ public class TDArrow : TDProjectile {
 		Vector3 dir = m_target.transform.position - transform.position;
 		dir.Normalize();
 		float angleY = -90f + Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+		if (angleY < 0)
+			angleY += 360f;
+		if (angleY > 360f)
+			angleY -= 360f;
 		dir *= speed()*Time.deltaTime;
-		transform.Translate(dir);
-		Vector3 euler = gameObject.transform.rotation.eulerAngles;
-		float rotX = euler.x; 
-		float rotY = angleY;
-		float rotZ = euler.z;
-		transform.rotation = Quaternion.Euler(rotX, rotY, rotZ);
+		transform.position = transform.position + dir; // Don't change to Translate else it will produce wrong transformation in combination with rotation
+		transform.rotation = Quaternion.Euler(0, angleY, 0);
 	}
 	public override void onTargetReached()
 	{
