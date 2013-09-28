@@ -10,12 +10,19 @@ public class TDGUILogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		TDWorld world = TDWorld.getWorld();
+		TDPlayer tdPlayer = world.getTDPlayer();
+		if (tdPlayer.health() <= 0)
+		{
+			Application.LoadLevel("GameOver");
+		}
+
 		if (Mode.eNone == m_mode)
 			return;
 		if (Input.GetMouseButtonDown(0))
 		{
 
-			TDWorld world = TDWorld.getWorld();
 
 			Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
@@ -42,7 +49,6 @@ public class TDGUILogic : MonoBehaviour {
 						if (newTower != null)
 						{
 							TDTower tdTower = world.getTDTower(newTower);
-							TDPlayer tdPlayer = world.getTDPlayer();
 							if (!tdPlayer.affords(tdTower.price()))
 							{
 								DestroyObject(newTower);
