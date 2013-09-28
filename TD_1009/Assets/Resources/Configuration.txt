@@ -13,6 +13,7 @@ hitDistance          = 0.1
 nbTrees              = 30
 
 playerHP             = 10
+playerMoney          = 100
 
 // Enemies
 enemyImpHP           = 50
@@ -28,6 +29,7 @@ towerArcherPhysicalDamage  = 3
 towerArcherProjectileSpeed = 40.0
 towerArcherRestoration     = 0.3
 towerArcherRadius          = 30.0
+towerArcherPrice           = 10
 
 towerCanonPhysicalDamage     = 9
 towerCanonProjectileSpeed    = 15.0
@@ -35,3 +37,4 @@ towerCanonBallDamageRadius   = 10.0
 towerCanonBallParabolaHeight = 5.0
 towerCanonRestoration        = 0.6
 towerCanonRadius             = 15.0
+towerCanonPrice              = 30

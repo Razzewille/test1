@@ -79,13 +79,14 @@ public class TDConfiguration
 	public uint nbTrees;
 
 	public uint playerHP;
-		
+	public uint playerMoney;
+
 	public uint enemyImpHP;
-	public float enemyImpKillReward;
+	public uint enemyImpKillReward;
 	public float enemyImpSpeed;
 	
 	public uint enemyGargoyleHP;
-	public float enemyGargoyleKillReward;
+	public uint enemyGargoyleKillReward;
 	public float enemyGargoyleSpeed;
 	
 	//Towers
@@ -93,6 +94,7 @@ public class TDConfiguration
 	public float towerArcherProjectileSpeed;
 	public float towerArcherRestoration;
 	public float towerArcherRadius;
+	public uint  towerArcherPrice;
 	
 	public float towerCanonPhysicalDamage;
 	public float towerCanonProjectileSpeed;
@@ -100,4 +102,5 @@ public class TDConfiguration
 	public float towerCanonBallParabolaHeight;
 	public float towerCanonRestoration;
 	public float towerCanonRadius;
+	public uint  towerCanonPrice;
 }

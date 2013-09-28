@@ -23,4 +23,8 @@ public class TDImp : TDEnemy {
 	{
 		return 0f;
 	}
+	protected override uint killReward()
+	{
+		return TDWorld.getWorld().m_configuration.enemyImpKillReward;
+	}
 }

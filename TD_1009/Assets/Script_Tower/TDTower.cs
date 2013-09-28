@@ -57,6 +57,7 @@ public abstract class TDTower : MonoBehaviour {
 	public abstract float getEfficientRadius();
 	public abstract TDProjectile createProjectile();
 	public abstract bool shootsFlying();
+	public abstract uint price();
 
 	public abstract TDDamage getTowerDamage();
 	public void shootTo(TDActor actor)

@@ -59,7 +59,6 @@ public class TDWorld : MonoBehaviour {
 	void Start () {
 		m_startTime = -1;
 		m_frequency = 1;
-		m_created = 0;
 	}
 	
 	// Update is called once per frame
@@ -75,29 +74,6 @@ public class TDWorld : MonoBehaviour {
 			else
 				addEnemy(TDEnemy.Type.eImp, pos);
 			m_startTime = (int) ((float)(m_frequency)*Time.time);
-		}
-		if (Input.GetMouseButtonDown(0))
-		{
-			Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast(mouseRay, out hit))
-			{
-				if (hit.transform.gameObject.Equals(GameObject.Find("Terrain")))
-				{
-					Vector3 pos = hit.point;
-					pos = truncate3d(pos);
-					if (TDGrid.CellState.eFree == positionState(pos))
-					{
-						occupyPosition(pos, TDGrid.CellState.eBusy);
-						if (Random.value < 0.8)
-							addTower(TDTower.Type.eArrowTower, pos);
-						else
-							addTower(TDTower.Type.eCanonTower, pos);
-						m_created++;
-						m_frequency = (5*m_created)/10 + 1;
-					}
-				}
-			}
 		}
 	}
 
@@ -127,12 +103,17 @@ public class TDWorld : MonoBehaviour {
 
 	public TDPlayer getTDPlayer()
 	{
-		return (TDPlayer) (getPlayer().GetComponent("TDPlayer"));
+		return (TDPlayer) getPlayer().GetComponent<TDPlayer>();
 	}
 
 	public TDEnemy getTDEnemy(GameObject obj)
 	{
-		return (TDEnemy) obj.GetComponent("TDEnemy");
+		return (TDEnemy) obj.GetComponent<TDEnemy>();
+	}
+
+	public TDTower getTDTower(GameObject obj)
+	{
+		return (TDTower) obj.GetComponent<TDTower>();
 	}
 
 	// May contain incomplete list or some deleted entries
@@ -198,7 +179,7 @@ public class TDWorld : MonoBehaviour {
 			}
 	}
 
-	Vector3 truncate3d(Vector3 pos)
+	public Vector3 truncate3d(Vector3 pos)
 	{
 		Vector3 res = from3dTo2d(pos);
 		TDGrid.Cell cell = m_grid.getCell(res);
@@ -265,7 +246,6 @@ public class TDWorld : MonoBehaviour {
 	public GameObject m_prefabCanonTower;
 	public GameObject m_prefabTree;
 
-	int m_created;
 	int m_frequency;
     int m_startTime;
 

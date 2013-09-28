@@ -23,4 +23,8 @@ public class TDGargoyle : TDEnemy {
 	{
 		return 0f;
 	}
+	protected override uint killReward()
+	{
+		return TDWorld.getWorld().m_configuration.enemyGargoyleKillReward;
+	}
 }

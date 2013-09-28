@@ -24,5 +24,9 @@ public class TDArrowTower : TDTower
 	{
 		return true;
 	}
+	public override uint price()
+	{
+		return TDWorld.getWorld().m_configuration.towerArcherPrice;
+	}
 	public GameObject m_prefabArrow;
 }

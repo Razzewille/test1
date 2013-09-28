@@ -122,7 +122,8 @@ public abstract class TDActor : MonoBehaviour {
 
 	public void receiveDamage(TDDamage damage)
 	{
-		m_aModifier.Add(damage);
+		if (m_aModifier != null)
+			m_aModifier.Add(damage);
 	}
 
 	public abstract uint getStartHP();

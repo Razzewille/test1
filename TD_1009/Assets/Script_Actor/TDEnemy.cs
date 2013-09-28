@@ -46,6 +46,7 @@ public abstract class TDEnemy : TDActor {
 		Destroy(m_healthBar);
 		if (OnEventDestroy != null)
 			OnEventDestroy(this);
+		TDWorld.getWorld().getTDPlayer().reward(killReward());
 	}
 
 	protected override void onTargetReached(GameObject obj)
@@ -64,6 +65,7 @@ public abstract class TDEnemy : TDActor {
 	{
 	}
 
+	protected abstract uint killReward();
 
 	GameObject m_healthBar;
 }

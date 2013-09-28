@@ -24,5 +24,9 @@ public class TDCanonTower : TDTower
 	{
 		return false;
 	}
+	public override uint price()
+	{
+		return TDWorld.getWorld().m_configuration.towerCanonPrice;
+	}
 	public GameObject m_prefabCanonBall;
 }
