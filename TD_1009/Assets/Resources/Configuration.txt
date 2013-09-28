@@ -25,8 +25,8 @@ enemyGargoyleSpeed       = 5.0
 
 //Towers
 towerArcherPhysicalDamage  = 3
-towerArcherProjectileSpeed = 10.0
-towerArcherRestoration     = 3
+towerArcherProjectileSpeed = 40.0
+towerArcherRestoration     = 0.3
 towerArcherRadius          = 30.0
 
 towerCanonPhysicalDamage     = 9
