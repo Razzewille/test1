@@ -85,6 +85,8 @@ public class TDWorld : MonoBehaviour {
 	public static TDWorld getWorld()
 	{
 		GameObject [] aWorlds = GameObject.FindGameObjectsWithTag("World");
+		if (0 == aWorlds.Length)
+			return null;
 		TDWorld world = (TDWorld) (aWorlds[0].GetComponent("TDWorld"));
 		return world;
 	}
@@ -92,18 +94,25 @@ public class TDWorld : MonoBehaviour {
 	public GameObject getPlayer()
 	{
 		GameObject [] aPlayers = GameObject.FindGameObjectsWithTag("Player");
+		if (0 == aPlayers.Length)
+			return null;
 		return aPlayers[0];
 	}
 
 	public GameObject getTerrain()
 	{
 		GameObject [] aTerrains = GameObject.FindGameObjectsWithTag("Terrain");
+		if (0 == aTerrains.Length)
+			return null;
 		return aTerrains[0];
 	}
 
 	public TDPlayer getTDPlayer()
 	{
-		return (TDPlayer) getPlayer().GetComponent<TDPlayer>();
+		GameObject player = getPlayer();
+		if (null == player)
+			return null;
+		return (TDPlayer) player.GetComponent<TDPlayer>();
 	}
 
 	public TDEnemy getTDEnemy(GameObject obj)

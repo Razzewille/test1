@@ -46,7 +46,13 @@ public abstract class TDEnemy : TDActor {
 		Destroy(m_healthBar);
 		if (OnEventDestroy != null)
 			OnEventDestroy(this);
-		TDWorld.getWorld().getTDPlayer().reward(killReward());
+		TDWorld world = TDWorld.getWorld();
+		if (world == null)
+			return;
+		TDPlayer player = world.getTDPlayer();
+		if (player == null)
+			return;
+		player.reward(killReward());
 	}
 
 	protected override void onTargetReached(GameObject obj)
