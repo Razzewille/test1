@@ -43,7 +43,19 @@ public class TDHero : TDActor {
 			m_state = State.ePatrol;
 			return;
 		}
-		TDDamage damage = new TDDamage(TDDamage.Type.ePhysical, world.m_configuration.heroPhysicalDamage, 0f);
+		if ((m_target.transform.position - transform.position).magnitude > world.m_configuration.heroFightRadius)
+		{
+			if (hasPathTo(m_target))
+			{
+				m_state = State.eWalk;
+			}
+			else
+			{
+				m_state = State.ePatrol;
+			}
+			return;
+		}
+		TDDamage damage = new TDDamage(TDDamage.Type.ePhysical, world.m_configuration.heroPhysicalDamagePerSec*Time.deltaTime, 0f);
 		damage.setTarget(tdEnemy);
 		tdEnemy.receiveDamage(damage);
 	}
@@ -59,6 +71,11 @@ public class TDHero : TDActor {
 		}
 		if (hasPathTo(m_target))
 		{
+			if (1 == m_path.Length)
+			{
+				m_path = null;
+				m_state = State.eFight;
+			}
 			walkByPath();
 			return;
 		}

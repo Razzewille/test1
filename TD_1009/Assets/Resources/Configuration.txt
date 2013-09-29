@@ -15,10 +15,11 @@ nbTrees              = 30
 playerHP             = 10
 playerMoney          = 100
 
-heroHP				 = 30
-heroSpeed            = 30
-heroPatrolRadius     = 60
-heroPhysicalDamage   = 30
+heroHP				     = 30
+heroSpeed                = 10
+heroPatrolRadius         = 20
+heroFightRadius          = 2
+heroPhysicalDamagePerSec = 30
 
 // Enemies
 enemyImpHP           = 50
@@ -33,7 +34,7 @@ enemyGargoyleSpeed       = 5.0
 towerArcherPhysicalDamage  = 3
 towerArcherProjectileSpeed = 40.0
 towerArcherRestoration     = 0.3
-towerArcherRadius          = 30.0
+towerArcherRadius          = 10.0
 towerArcherPrice           = 10
 
 towerCanonPhysicalDamage     = 9
