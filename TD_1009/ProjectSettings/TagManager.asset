@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - Terrain
   - EnemyRespawn
+  - FakeTarget
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
