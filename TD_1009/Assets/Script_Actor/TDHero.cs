@@ -104,6 +104,9 @@ public class TDHero : TDActor {
 		{
 			if ((enemy.transform.position - transform.position).magnitude < world.m_configuration.heroPatrolRadius)
 			{
+				TDEnemy tdEnemy = world.getTDEnemy(enemy);
+				if (tdEnemy.canFly())
+					continue;
 				if (hasPathTo(enemy))
 				{
 					m_state = State.eWalk;

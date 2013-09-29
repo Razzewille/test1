@@ -259,11 +259,6 @@ public class TDWorld : MonoBehaviour {
 		return (GameObject) Instantiate(m_prefabTree, pos, Quaternion.identity);
 	}
 
-	public GameObject addHero(Vector3 pos)
-	{
-		return (GameObject) Instantiate(m_prefabHero, pos, Quaternion.identity);
-	}
-
 	public Vector3 from2dTo3d(Vector3 vec2d)
 	{
 		return new Vector3(vec2d.x, 1, vec2d.y);
@@ -284,7 +279,6 @@ public class TDWorld : MonoBehaviour {
 	public GameObject m_prefabArrowTower;
 	public GameObject m_prefabCanonTower;
 	public GameObject m_prefabTree;
-	public GameObject m_prefabHero;
 
 	int m_frequency;
     int m_startTime;
