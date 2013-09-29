@@ -81,6 +81,11 @@ public class TDConfiguration
 	public uint playerHP;
 	public uint playerMoney;
 
+	public uint  heroHP;
+	public float heroSpeed;
+	public float heroPatrolRadius;
+	public float heroPhysicalDamage;
+
 	public uint enemyImpHP;
 	public uint enemyImpKillReward;
 	public float enemyImpSpeed;

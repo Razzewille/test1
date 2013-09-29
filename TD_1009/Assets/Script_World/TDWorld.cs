@@ -99,6 +99,14 @@ public class TDWorld : MonoBehaviour {
 		return aPlayers[0];
 	}
 
+	public GameObject getHero()
+	{
+		GameObject [] aHeros = GameObject.FindGameObjectsWithTag("Hero");
+		if (0 == aHeros.Length)
+			return null;
+		return aHeros[0];
+	}
+
 	public GameObject getTerrain()
 	{
 		GameObject [] aTerrains = GameObject.FindGameObjectsWithTag("Terrain");
@@ -115,8 +123,18 @@ public class TDWorld : MonoBehaviour {
 		return (TDPlayer) player.GetComponent<TDPlayer>();
 	}
 
+	public TDHero getTDHero()
+	{
+		GameObject player = getHero();
+		if (null == player)
+			return null;
+		return (TDHero) player.GetComponent<TDHero>();
+	}
+
 	public TDEnemy getTDEnemy(GameObject obj)
 	{
+		if (null == obj)
+			return null;
 		return (TDEnemy) obj.GetComponent<TDEnemy>();
 	}
 
@@ -157,6 +175,13 @@ public class TDWorld : MonoBehaviour {
 	public GameObject [] getAllEnemyRespawnPoints()
 	{
 		return GameObject.FindGameObjectsWithTag("EnemyRespawn");
+	}
+	
+	public bool isFakeTarget(GameObject obj)
+	{
+		if (null == obj)
+			return false;
+		return (obj.tag == "FakeTarget");
 	}
 
 	public TDGrid.CellState positionState(Vector3 pos)
@@ -234,6 +259,11 @@ public class TDWorld : MonoBehaviour {
 		return (GameObject) Instantiate(m_prefabTree, pos, Quaternion.identity);
 	}
 
+	public GameObject addHero(Vector3 pos)
+	{
+		return (GameObject) Instantiate(m_prefabHero, pos, Quaternion.identity);
+	}
+
 	public Vector3 from2dTo3d(Vector3 vec2d)
 	{
 		return new Vector3(vec2d.x, 1, vec2d.y);
@@ -254,6 +284,7 @@ public class TDWorld : MonoBehaviour {
 	public GameObject m_prefabArrowTower;
 	public GameObject m_prefabCanonTower;
 	public GameObject m_prefabTree;
+	public GameObject m_prefabHero;
 
 	int m_frequency;
     int m_startTime;

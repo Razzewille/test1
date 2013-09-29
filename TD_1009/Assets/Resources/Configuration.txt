@@ -15,6 +15,11 @@ nbTrees              = 30
 playerHP             = 10
 playerMoney          = 100
 
+heroHP				 = 30
+heroSpeed            = 30
+heroPatrolRadius     = 60
+heroPhysicalDamage   = 30
+
 // Enemies
 enemyImpHP           = 50
 enemyImpKillReward   = 20

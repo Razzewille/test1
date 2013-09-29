@@ -115,7 +115,7 @@ public abstract class TDActor : MonoBehaviour {
 	protected abstract void onTargetDestroyed();
 
 
-	void die()
+	protected virtual void die()
 	{
 		Destroy(gameObject);
 	}
@@ -160,12 +160,12 @@ public abstract class TDActor : MonoBehaviour {
 		return pathExists;
 	}
 
-	GameObject m_target;
+	protected GameObject m_target;
 
 	protected List<TDModifier> m_aModifier;
 	protected float m_HP;
 	protected float m_momentalSpeedFactor;
 
 	int m_currentCellIndex;
-	TDGrid.Cell[] m_path;
+	protected TDGrid.Cell[] m_path;
 }

@@ -6,6 +6,8 @@ public class TDGUILogic : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		m_mode = Mode.eNone;
+		GameObject player = TDWorld.getWorld().getPlayer();
+		GameObject hero = TDWorld.getWorld().addHero(player.transform.position);
 	}
 	
 	// Update is called once per frame
