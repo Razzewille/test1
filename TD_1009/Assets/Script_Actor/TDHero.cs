@@ -29,6 +29,19 @@ public class TDHero : TDActor {
 		}
 	}
 
+	protected override void setTarget(GameObject newTarget)
+	{
+		if (null != target())
+		{
+			TDWorld world = TDWorld.getWorld();
+			if (world.isFakeTarget(target()))
+			{
+				DestroyObject(target());
+			}
+		}
+		base.setTarget(newTarget);
+	}
+
 	private void returnToBase()
 	{
 		
@@ -37,15 +50,15 @@ public class TDHero : TDActor {
 	private void fight()
 	{
 		TDWorld world = TDWorld.getWorld();
-		TDEnemy tdEnemy = world.getTDEnemy(m_target);
+		TDEnemy tdEnemy = world.getTDEnemy(target());
 		if (null == tdEnemy)
 		{
 			m_state = State.ePatrol;
 			return;
 		}
-		if ((m_target.transform.position - transform.position).magnitude > world.m_configuration.heroFightRadius)
+		if ((target().transform.position - transform.position).magnitude > world.m_configuration.heroFightRadius)
 		{
-			if (hasPathTo(m_target))
+			if (hasPathTo(target()))
 			{
 				m_state = State.eWalk;
 			}
@@ -62,14 +75,14 @@ public class TDHero : TDActor {
 
 	private void walk()
 	{
-		if (null == m_target)
+		if (null == target())
 			m_path = null;
 		if (null == m_path)
 		{
 			m_state = State.ePatrol;
 			return;
 		}
-		if (hasPathTo(m_target))
+		if (hasPathTo(target()))
 		{
 			if (1 == m_path.Length)
 			{
@@ -128,6 +141,25 @@ public class TDHero : TDActor {
 	protected override void onTargetDestroyed()
 	{
 		m_state = State.ePatrol;
+	}
+
+	public void patrol(Vector3 pos)
+	{
+		GameObject fakeTarget = (GameObject) Instantiate(m_prefabFakeTarget, pos, new Quaternion());
+		if (hasPathTo(fakeTarget))
+		{
+			m_state = State.eWalk;
+		}
+		else
+		{
+			DestroyObject(fakeTarget);
+		}
+	}
+
+	public void runToBase()
+	{
+		GameObject player = TDWorld.getWorld().getPlayer();
+		hasPathTo(player);
 	}
 
 	public override uint getStartHP()

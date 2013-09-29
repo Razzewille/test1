@@ -57,7 +57,7 @@ public abstract class TDActor : MonoBehaviour {
 		if ((m_currentCellIndex < 0) ||	(m_currentCellIndex >= m_path.Length))
 			return false;
 
-		if (m_target == null) // nowhere to go
+		if (target() == null) // nowhere to go
 		{
 			m_path = null;
 			m_currentCellIndex = -1;
@@ -91,7 +91,7 @@ public abstract class TDActor : MonoBehaviour {
 		if (!canFly())
 			if (TDGrid.CellState.eBusy == TDWorld.getWorld().positionState(nextPos))
 			{
-				return buildPath(m_target); // To make things easy walk there next step
+				return buildPath(target()); // To make things easy walk there next step
 			}
 
 		transform.Translate(move);
@@ -101,7 +101,7 @@ public abstract class TDActor : MonoBehaviour {
 		
 		if (m_currentCellIndex == m_path.Length)
 		{
-			onTargetReached(m_target);
+			onTargetReached(target());
 			m_path = null;
 			m_currentCellIndex = -1;
 			return true;
@@ -145,7 +145,7 @@ public abstract class TDActor : MonoBehaviour {
 	bool buildPath(GameObject target)
 	{
 		m_currentCellIndex = -1;
-		m_target = null;
+		setTarget(null);
 		TDWorld world = TDWorld.getWorld();
 		TDGrid grid = world.m_grid;
 		TDGrid.Cell startCell = grid.getCell(world.from3dTo2d(gameObject.transform.position));
@@ -156,11 +156,21 @@ public abstract class TDActor : MonoBehaviour {
 		else
 			pathExists = grid.buildPath(startCell, endCell, out m_path);
 		m_currentCellIndex = 0;
-		m_target = target;
+		setTarget(target);
 		return pathExists;
 	}
 
-	protected GameObject m_target;
+	protected virtual void setTarget(GameObject newTarget)
+	{
+		m_target = newTarget;
+	}
+
+	protected GameObject target()
+	{
+		return m_target;
+	}
+
+	GameObject m_target;
 
 	protected List<TDModifier> m_aModifier;
 	protected float m_HP;

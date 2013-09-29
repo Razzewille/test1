@@ -34,7 +34,7 @@ public class TDGUILogic : MonoBehaviour {
 				{
 					Vector3 pos = hit.point;
 					pos = TDWorld.getWorld().truncate3d(pos);
-					GameObject newTower;
+					GameObject newTower = null;
 					if (TDGrid.CellState.eFree == world.positionState(pos))
 					{
 						switch (m_mode)
@@ -44,6 +44,10 @@ public class TDGUILogic : MonoBehaviour {
 								break;
 							case Mode.eCanon:
 								newTower = world.addTower(TDTower.Type.eCanonTower, pos);
+								break;
+							case Mode.eHeroPatrol:
+								TDHero tdHero = world.getTDHero();
+								tdHero.patrol(pos);
 								break;
 							default:
 								return;
@@ -78,15 +82,49 @@ public class TDGUILogic : MonoBehaviour {
 		GUI.Label(new Rect(130, 50, 50, 20), moneyString);
 
 		GUI.Box(new Rect(800, 500, 500, 80), "Towers");
-
+		
+		GUI.SetNextControlName("Archer");
 		if (GUI.Button(new Rect(850, 530, 80, 20), "Archer"))
 		{
 			m_mode = Mode.eArcher;
 		}
 
+		GUI.SetNextControlName("Canonier");
 		if (GUI.Button(new Rect(950, 530, 80, 20), "Canonier"))
 		{
 			m_mode = Mode.eCanon;	
+		}
+
+		GUI.Box(new Rect(20, 500, 500, 80), "Eric the Strongblade");
+		
+		GUI.SetNextControlName("Patrol");
+		if (GUI.Button(new Rect(70, 530, 80, 20), "Patrol"))
+		{
+			m_mode = Mode.eHeroPatrol;
+		}
+
+		GUI.SetNextControlName("To base!");
+		if (GUI.Button(new Rect(220, 530, 80, 20), "To base!"))
+		{
+			m_mode = Mode.eHeroToBase;
+			TDHero tdHero = TDWorld.getWorld().getTDHero();
+			tdHero.runToBase();
+		}
+
+		switch (m_mode)
+		{
+			case Mode.eArcher:
+				GUI.FocusControl("Archer");
+				break;
+			case Mode.eCanon:
+				GUI.FocusControl("Canonier");
+				break;
+			case Mode.eHeroPatrol:
+				GUI.FocusControl("Patrol");
+				break;
+			case Mode.eHeroToBase:
+				GUI.FocusControl("To base!");
+				break;
 		}
 	}
 	
@@ -104,9 +142,11 @@ public class TDGUILogic : MonoBehaviour {
 
 	enum Mode
 	{
-		eNone = 0,
-		eArcher = 1,
-		eCanon = 2
+		eNone       = 0,
+		eArcher     = 1,
+		eCanon      = 2,
+		eHeroPatrol = 3,
+		eHeroToBase = 4
 	}
 
 	Mode m_mode;
