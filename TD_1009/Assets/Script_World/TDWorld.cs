@@ -259,6 +259,44 @@ public class TDWorld : MonoBehaviour {
 		return (GameObject) Instantiate(m_prefabTree, pos, Quaternion.identity);
 	}
 
+	public bool canTowerBeBuiltAt(Vector3 pos)
+	{
+		GameObject player = getPlayer();
+		GameObject [] aRespawnPoints = getAllEnemyRespawnPoints();
+
+		TDGrid.Cell startCell = m_grid.getCell(from3dTo2d(player.transform.position));
+		TDGrid.Cell checkCell = m_grid.getCell(from3dTo2d(pos));
+
+		if (m_grid.cellState(checkCell) != TDGrid.CellState.eFree)
+			return false;
+
+		bool canBuild = true;
+		try
+		{
+			m_grid.setCellState(checkCell, TDGrid.CellState.eBusy);
+			foreach (GameObject respawnPoint in aRespawnPoints)
+			{
+				TDGrid.Cell endCell = m_grid.getCell(from3dTo2d(respawnPoint.transform.position));
+				TDGrid.Cell[] path;
+				bool pathExists = m_grid.buildPath(startCell, endCell, out path);
+				if (!pathExists)
+				{
+					canBuild = false;
+					break;
+				}
+			}
+		}
+		catch (UnityException)
+		{
+		}
+		finally
+		{
+			m_grid.setCellState(checkCell, TDGrid.CellState.eFree);
+		}
+
+		return canBuild;
+	}
+
 	public Vector3 from2dTo3d(Vector3 vec2d)
 	{
 		return new Vector3(vec2d.x, 1, vec2d.y);

@@ -69,7 +69,7 @@ public class TDCanonBall : TDProjectile {
 				continue;
 			if (enemy.canFly())
 				continue;
-			enemy.receiveDamage(m_damage.clone(enemy));
+			enemy.receiveDamage(m_damage.clone(enemy), null);
 		}
 	}
 	

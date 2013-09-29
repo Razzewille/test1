@@ -120,7 +120,7 @@ public abstract class TDActor : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	public void receiveDamage(TDDamage damage)
+	public void receiveDamage(TDDamage damage, TDActor source)
 	{
 		if (m_aModifier != null)
 			m_aModifier.Add(damage);

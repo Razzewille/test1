@@ -24,7 +24,7 @@ public class TDArrow : TDProjectile {
 	{
 		if (m_target != null)
 		{
-			m_target.receiveDamage(m_damage);
+			m_target.receiveDamage(m_damage, null);
 		}
 	}
 }

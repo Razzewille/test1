@@ -22,12 +22,22 @@ public abstract class TDEnemy : TDActor {
 		TDWorld world = TDWorld.getWorld();
 		GameObject player = world.getPlayer();
 		hasPathTo(player);
+
+		m_timer = Time.time;
 	}
 
 	// Update is called once per frame
 	protected override void Update () {
 		base.Update();		
 		updateHealthBar();
+		
+		TDWorld world = TDWorld.getWorld();
+		if (Time.time - m_timer > world.m_configuration.enemyRecalcPathTime)
+		{
+			GameObject player = world.getPlayer();
+			m_timer = Time.time;
+			hasPathTo(player);
+		}
 	}
 
 	void updateHealthBar()
@@ -74,4 +84,5 @@ public abstract class TDEnemy : TDActor {
 	protected abstract uint killReward();
 
 	GameObject m_healthBar;
+	float m_timer;
 }

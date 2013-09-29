@@ -22,13 +22,22 @@ heroFightRadius          = 2
 heroPhysicalDamagePerSec = 30
 
 // Enemies
-enemyImpHP           = 50
-enemyImpKillReward   = 20
-enemyImpSpeed        = 8.0
 
-enemyGargoyleHP         = 20
-enemyGargoyleKillReward  = 30
-enemyGargoyleSpeed       = 5.0
+enemyRecalcPathTime = 3.0
+
+enemyImpHP                = 50
+enemyImpKillReward        = 20
+enemyImpSpeed             = 8.0
+enemyImpHeroHostileChance = 0.05
+enemyImpHeroHostileRadius = 10.0
+enemyImpPhysicalDamage    = 1
+
+enemyGargoyleHP                = 20
+enemyGargoyleKillReward        = 30
+enemyGargoyleSpeed             = 5.0
+enemyGargoyleHeroHostileChance = 0
+enemyGargoyleHeroHostileRadius = 0
+enemyGargoylePhysicalDamage    = 1
 
 //Towers
 towerArcherPhysicalDamage  = 3

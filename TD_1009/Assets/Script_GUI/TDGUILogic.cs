@@ -38,9 +38,13 @@ public class TDGUILogic : MonoBehaviour {
 						switch (m_mode)
 						{
 							case Mode.eArcher:
+								if (!world.canTowerBeBuiltAt(pos))
+									break;
 								newTower = world.addTower(TDTower.Type.eArrowTower, pos);
 								break;
 							case Mode.eCanon:
+								if (!world.canTowerBeBuiltAt(pos))
+									break;
 								newTower = world.addTower(TDTower.Type.eCanonTower, pos);
 								break;
 							case Mode.eHeroPatrol:

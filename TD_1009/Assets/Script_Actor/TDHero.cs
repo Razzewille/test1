@@ -20,9 +20,6 @@ public class TDHero : TDActor {
 			case State.eFight:
 				fight();
 				break;
-			case State.eReturnToBase:
-				returnToBase();
-				break;
 			case State.ePatrol:
 				patrol();
 				break;
@@ -40,11 +37,6 @@ public class TDHero : TDActor {
 			}
 		}
 		base.setTarget(newTarget);
-	}
-
-	private void returnToBase()
-	{
-		
 	}
 
 	private void fight()
@@ -70,7 +62,7 @@ public class TDHero : TDActor {
 		}
 		TDDamage damage = new TDDamage(TDDamage.Type.ePhysical, world.m_configuration.heroPhysicalDamagePerSec*Time.deltaTime, 0f);
 		damage.setTarget(tdEnemy);
-		tdEnemy.receiveDamage(damage);
+		tdEnemy.receiveDamage(damage, this);
 	}
 
 	private void walk()
@@ -191,7 +183,6 @@ public class TDHero : TDActor {
 		ePatrol       = 0,
 		eWalk         = 1,
 		eFight        = 2,
-		eReturnToBase = 3
 	}
 	State m_state;
 	public GameObject m_prefabFakeTarget;

@@ -87,13 +87,21 @@ public class TDConfiguration
 	public float heroPatrolRadius;
 	public float heroPhysicalDamagePerSec;
 
+	public float enemyRecalcPathTime;
+
 	public uint enemyImpHP;
 	public uint enemyImpKillReward;
 	public float enemyImpSpeed;
+	public float enemyImpHeroHostileChance;
+	public float enemyImpHeroHostileRadius;
+	public float enemyImpPhysicalDamage;
 
 	public uint enemyGargoyleHP;
 	public uint enemyGargoyleKillReward;
 	public float enemyGargoyleSpeed;
+	public float enemyGargoyleHeroHostileChance;
+	public float enemyGargoyleHeroHostileRadius;
+	public float enemyGargoylePhysicalDamage;
 	
 	//Towers
 	public float towerArcherPhysicalDamage;
