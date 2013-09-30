@@ -90,3 +90,31 @@ public class TDDamage : TDModifier
 	float m_firstDamage;
 	float m_contDamagePerSec;
 }
+
+public class TDHealthRegeneration : TDModifier
+{
+	public TDHealthRegeneration(float applyTime, float healPerSec)
+	{
+		m_applyTime = applyTime;
+	 	m_healPerSec = healPerSec;
+	}
+
+	protected override float applyTime() // Does instant damage if not overriden
+	{
+		return m_applyTime;
+	}
+
+	protected override void applyFirstTime()
+	{
+	}
+	
+	protected override void applyContinuous()
+	{
+		if (m_target == null)
+			return;
+		m_target.heal(m_healPerSec*Time.deltaTime);
+	}
+
+	float m_applyTime;
+	float m_healPerSec;
+}

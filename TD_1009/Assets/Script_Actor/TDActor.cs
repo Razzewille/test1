@@ -24,6 +24,10 @@ public abstract class TDActor : MonoBehaviour {
 					die();
 					break;
 				}
+				if (m_HP > getStartHP())
+				{
+					m_HP = getStartHP();
+				}
 				if (m.finished())
 					itemsToRemove.Add(m);
 			}
@@ -125,8 +129,15 @@ public abstract class TDActor : MonoBehaviour {
 
 	virtual public void receiveDamage(TDDamage damage, TDActor source)
 	{
+		receiveModifier(damage);
+	}
+
+	public void receiveModifier(TDModifier modifier)
+	{
+		if (modifier != null)
+			modifier.setTarget(this);
 		if (m_aModifier != null)
-			m_aModifier.Add(damage);
+			m_aModifier.Add(modifier);
 	}
 
 	public abstract uint getStartHP();
@@ -135,6 +146,11 @@ public abstract class TDActor : MonoBehaviour {
 	public float health()
 	{
 		return m_HP;
+	}
+
+	public void heal(float val)
+	{
+		m_HP += val;
 	}
 
 	public void receiveDamage(TDDamage.Type type, float val)

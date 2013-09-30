@@ -7,6 +7,7 @@ public class TDHero : TDActor {
 	protected override void Start () {
 		base.Start();
 		m_state = State.ePatrol;
+		receiveModifier(new TDHealthRegeneration(10000.0f, TDWorld.getWorld().m_configuration.heroAutoHealPerSec));
 	}
 	
 	// Update is called once per frame
@@ -61,7 +62,6 @@ public class TDHero : TDActor {
 			return;
 		}
 		TDDamage damage = new TDDamage(TDDamage.Type.ePhysical, world.m_configuration.heroPhysicalDamagePerSec*Time.deltaTime, 0f);
-		damage.setTarget(tdEnemy);
 		tdEnemy.receiveDamage(damage, this);
 	}
 

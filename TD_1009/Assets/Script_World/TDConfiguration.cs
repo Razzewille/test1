@@ -86,6 +86,7 @@ public class TDConfiguration
 	public float heroFightRadius;
 	public float heroPatrolRadius;
 	public float heroPhysicalDamagePerSec;
+	public float heroAutoHealPerSec;
 
 	public float enemyRecalcPathTime;
 

@@ -73,7 +73,6 @@ public abstract class TDEnemy : TDActor {
 		{
 			cleanPath();
 			TDDamage damage = new TDDamage(TDDamage.Type.ePhysical, physicalDamage()*Time.deltaTime, 0.0f); // Replace by override TDEnemy::getDamage
-			damage.setTarget(hero);
 			hero.receiveDamage(damage, this);
 		}
 		else

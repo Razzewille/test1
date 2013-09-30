@@ -63,7 +63,6 @@ public abstract class TDTower : MonoBehaviour {
 	public void shootTo(TDActor actor)
 	{
 		TDDamage damage = getTowerDamage();
-		damage.setTarget(actor);
 		TDProjectile projectile = createProjectile();
 		projectile.m_damage = damage;
 		projectile.setTarget(actor);
