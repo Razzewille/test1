@@ -94,6 +94,7 @@ public class TDConfiguration
 	public float enemyImpSpeed;
 	public float enemyImpHeroHostileChance;
 	public float enemyImpHeroHostileRadius;
+	public float enemyImpFightRadius;
 	public float enemyImpPhysicalDamage;
 
 	public uint enemyGargoyleHP;
@@ -101,6 +102,7 @@ public class TDConfiguration
 	public float enemyGargoyleSpeed;
 	public float enemyGargoyleHeroHostileChance;
 	public float enemyGargoyleHeroHostileRadius;
+	public float enemyGargoyleFightRadius;
 	public float enemyGargoylePhysicalDamage;
 	
 	//Towers

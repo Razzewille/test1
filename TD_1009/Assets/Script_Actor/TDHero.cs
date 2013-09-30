@@ -68,7 +68,9 @@ public class TDHero : TDActor {
 	private void walk()
 	{
 		if (null == target())
-			m_path = null;
+		{
+			cleanPath();
+		}
 		if (null == m_path)
 		{
 			m_state = State.ePatrol;
@@ -78,7 +80,7 @@ public class TDHero : TDActor {
 		{
 			if (1 == m_path.Length)
 			{
-				m_path = null;
+				cleanPath();
 				m_state = State.eFight;
 			}
 			walkByPath();
@@ -176,6 +178,10 @@ public class TDHero : TDActor {
 	public override float getResistance(TDDamage.Type type)
 	{
 		return 0f;
+	}
+
+	protected override void die()
+	{
 	}
 
 	enum State

@@ -98,15 +98,19 @@ public class TDGUILogic : MonoBehaviour {
 		}
 
 		GUI.Box(new Rect(20, 500, 500, 80), "Eric the Strongblade");
+
+		string heroHealthString;
+		heroHealthString = (int) Mathf.Ceil(TDWorld.getWorld().getTDHero().health()) + " HP";
+		GUI.Label(new Rect(30, 530, 50, 20), heroHealthString);
 		
 		GUI.SetNextControlName("Patrol");
-		if (GUI.Button(new Rect(70, 530, 80, 20), "Patrol"))
+		if (GUI.Button(new Rect(150, 530, 80, 20), "Patrol"))
 		{
 			m_mode = Mode.eHeroPatrol;
 		}
 
 		GUI.SetNextControlName("To base!");
-		if (GUI.Button(new Rect(220, 530, 80, 20), "To base!"))
+		if (GUI.Button(new Rect(300, 530, 80, 20), "To base!"))
 		{
 			m_mode = Mode.eHeroToBase;
 			TDHero tdHero = TDWorld.getWorld().getTDHero();

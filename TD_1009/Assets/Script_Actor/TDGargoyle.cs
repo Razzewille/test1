@@ -27,4 +27,20 @@ public class TDGargoyle : TDEnemy {
 	{
 		return TDWorld.getWorld().m_configuration.enemyGargoyleKillReward;
 	}
+	protected override float heroHostileChance()
+	{
+		return TDWorld.getWorld().m_configuration.enemyGargoyleHeroHostileChance;
+	}
+	protected override float heroHostileRadius()
+	{
+		return TDWorld.getWorld().m_configuration.enemyGargoyleHeroHostileRadius;
+	}
+	protected override float fightRadius()
+	{
+		return TDWorld.getWorld().m_configuration.enemyGargoyleFightRadius;
+	}
+	protected override float physicalDamage()
+	{
+		return TDWorld.getWorld().m_configuration.enemyGargoylePhysicalDamage;
+	}
 }

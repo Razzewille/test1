@@ -27,4 +27,20 @@ public class TDImp : TDEnemy {
 	{
 		return TDWorld.getWorld().m_configuration.enemyImpKillReward;
 	}
+	protected override float heroHostileChance()
+	{
+		return TDWorld.getWorld().m_configuration.enemyImpHeroHostileChance;
+	}
+	protected override float heroHostileRadius()
+	{
+		return TDWorld.getWorld().m_configuration.enemyImpHeroHostileRadius;
+	}
+	protected override float fightRadius()
+	{
+		return TDWorld.getWorld().m_configuration.enemyImpFightRadius;
+	}
+	protected override float physicalDamage()
+	{
+		return TDWorld.getWorld().m_configuration.enemyImpPhysicalDamage;
+	}
 }

@@ -6,8 +6,7 @@ public abstract class TDActor : MonoBehaviour {
 	// Use this for initialization
 	protected virtual void Start () {
 		m_HP = (int) getStartHP();
-		m_path = null;
-		m_currentCellIndex = -1;
+		cleanPath();
 		m_aModifier = new List<TDModifier>();
 	}
 	
@@ -59,8 +58,7 @@ public abstract class TDActor : MonoBehaviour {
 
 		if (target() == null) // nowhere to go
 		{
-			m_path = null;
-			m_currentCellIndex = -1;
+			cleanPath();
 			onTargetDestroyed();
 			return true;
 		}
@@ -102,12 +100,17 @@ public abstract class TDActor : MonoBehaviour {
 		if (m_currentCellIndex == m_path.Length)
 		{
 			onTargetReached(target());
-			m_path = null;
-			m_currentCellIndex = -1;
+			cleanPath();
 			return true;
 		}
 
 		return true;
+	}
+
+	protected void cleanPath()
+	{
+		m_path = null;
+		m_currentCellIndex = -1;
 	}
 
 	protected abstract void onTargetReached(GameObject obj);
@@ -120,7 +123,7 @@ public abstract class TDActor : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	public void receiveDamage(TDDamage damage, TDActor source)
+	virtual public void receiveDamage(TDDamage damage, TDActor source)
 	{
 		if (m_aModifier != null)
 			m_aModifier.Add(damage);
@@ -128,6 +131,11 @@ public abstract class TDActor : MonoBehaviour {
 
 	public abstract uint getStartHP();
 	public abstract float getStartSpeed();
+
+	public float health()
+	{
+		return m_HP;
+	}
 
 	public void receiveDamage(TDDamage.Type type, float val)
 	{

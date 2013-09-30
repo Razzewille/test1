@@ -15,7 +15,7 @@ nbTrees              = 30
 playerHP             = 10
 playerMoney          = 100
 
-heroHP				     = 30
+heroHP                   = 10
 heroSpeed                = 10
 heroPatrolRadius         = 20
 heroFightRadius          = 2
@@ -23,13 +23,14 @@ heroPhysicalDamagePerSec = 30
 
 // Enemies
 
-enemyRecalcPathTime = 3.0
+enemyRecalcPathTime       = 3.0
 
 enemyImpHP                = 50
 enemyImpKillReward        = 20
 enemyImpSpeed             = 8.0
-enemyImpHeroHostileChance = 0.05
+enemyImpHeroHostileChance = 0.005
 enemyImpHeroHostileRadius = 10.0
+enemyImpFightRadius       = 2
 enemyImpPhysicalDamage    = 1
 
 enemyGargoyleHP                = 20
@@ -37,6 +38,7 @@ enemyGargoyleKillReward        = 30
 enemyGargoyleSpeed             = 5.0
 enemyGargoyleHeroHostileChance = 0
 enemyGargoyleHeroHostileRadius = 0
+enemyGargoyleFightRadius       = 2
 enemyGargoylePhysicalDamage    = 1
 
 //Towers

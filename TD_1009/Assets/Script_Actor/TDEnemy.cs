@@ -23,6 +23,8 @@ public abstract class TDEnemy : TDActor {
 		GameObject player = world.getPlayer();
 		hasPathTo(player);
 
+		m_state = State.eRunToPlayer;
+
 		m_timer = Time.time;
 	}
 
@@ -30,13 +32,72 @@ public abstract class TDEnemy : TDActor {
 	protected override void Update () {
 		base.Update();		
 		updateHealthBar();
-		
+
+		switch (m_state)
+		{
+			case State.eRunToPlayer:
+				runToPlayer();
+				break;
+			case State.eFightHero:
+				fightHero();
+				break;
+		}
+
+	}
+
+	void runToPlayer()
+	{
 		TDWorld world = TDWorld.getWorld();
 		if (Time.time - m_timer > world.m_configuration.enemyRecalcPathTime)
 		{
 			GameObject player = world.getPlayer();
 			m_timer = Time.time;
 			hasPathTo(player);
+		}
+		TDHero hero = world.getTDHero();
+		if ((hero.transform.position - transform.position).magnitude < heroHostileRadius())
+		{
+			if (Random.value < heroHostileChance())
+			{
+				cleanPath();
+				m_state = State.eFightHero;
+			}
+		}
+	}
+
+	void fightHero()
+	{
+		TDWorld world = TDWorld.getWorld();
+		TDHero hero = world.getTDHero();
+		if ((hero.transform.position - transform.position).magnitude < fightRadius())
+		{
+			cleanPath();
+			TDDamage damage = new TDDamage(TDDamage.Type.ePhysical, physicalDamage()*Time.deltaTime, 0.0f); // Replace by override TDEnemy::getDamage
+			damage.setTarget(hero);
+			hero.receiveDamage(damage, this);
+		}
+		else
+		{
+			if ((null == m_path) || (Time.time - m_timer > world.m_configuration.enemyRecalcPathTime))
+			{
+				m_timer = Time.time;
+				hasPathTo(hero.gameObject);
+			}
+		}
+		
+	}
+
+	override public void receiveDamage(TDDamage damage, TDActor source)
+	{
+		base.receiveDamage(damage, source);
+		if (null != source)
+		{
+			TDWorld world = TDWorld.getWorld();
+			TDHero hero = world.getTDHero();
+			if (source == hero)
+			{
+				m_state = State.eFightHero;
+			}
 		}
 	}
 
@@ -82,6 +143,18 @@ public abstract class TDEnemy : TDActor {
 	}
 
 	protected abstract uint killReward();
+
+	protected abstract float heroHostileChance();
+	protected abstract float heroHostileRadius();
+	protected abstract float fightRadius();
+	protected abstract float physicalDamage();
+
+	enum State
+	{
+		eRunToPlayer     = 0,
+		eFightHero       = 2,
+	}
+	State m_state;
 
 	GameObject m_healthBar;
 	float m_timer;
