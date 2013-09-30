@@ -156,7 +156,10 @@ public class TDHero : TDActor {
 	public void runToBase()
 	{
 		GameObject player = TDWorld.getWorld().getPlayer();
-		hasPathTo(player);
+		if (hasPathTo(player))
+			m_state = State.eWalk;
+		else
+			m_state = State.ePatrol;
 	}
 
 	public override uint getStartHP()
