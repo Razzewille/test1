@@ -87,6 +87,7 @@ public class TDConfiguration
 	public float heroPatrolRadius;
 	public float heroPhysicalDamagePerSec;
 	public float heroAutoHealPerSec;
+	public float heroDeathTime;
 
 	public float enemyRecalcPathTime;
 
@@ -96,7 +97,7 @@ public class TDConfiguration
 	public float enemyImpHeroHostileChance;
 	public float enemyImpHeroHostileRadius;
 	public float enemyImpFightRadius;
-	public float enemyImpPhysicalDamage;
+	public float enemyImpPhysicalDamagePerSec;
 
 	public uint enemyGargoyleHP;
 	public uint enemyGargoyleKillReward;
@@ -104,7 +105,7 @@ public class TDConfiguration
 	public float enemyGargoyleHeroHostileChance;
 	public float enemyGargoyleHeroHostileRadius;
 	public float enemyGargoyleFightRadius;
-	public float enemyGargoylePhysicalDamage;
+	public float enemyGargoylePhysicalDamagePerSec;
 	
 	//Towers
 	public float towerArcherPhysicalDamage;

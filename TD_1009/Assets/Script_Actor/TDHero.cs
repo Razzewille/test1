@@ -26,6 +26,9 @@ public class TDHero : TDActor {
 			case State.ePatrol:
 				patrol();
 				break;
+			case State.eDead:
+				deadTime();
+				break;
 		}
 	}
 
@@ -185,8 +188,33 @@ public class TDHero : TDActor {
 		return 0f;
 	}
 
+	public override bool isAlive()
+	{
+		return m_state != State.eDead;
+	}
+
 	protected override void die()
 	{
+		m_state = State.eDead;
+		renderer.enabled = false;
+		m_deathTime = Time.time;
+		m_cross = (GameObject) Instantiate(m_prefabCross, transform.position, new Quaternion());
+	}
+
+	protected void deadTime()
+	{
+		if (Time.time - m_deathTime > TDWorld.getWorld().m_configuration.heroDeathTime)
+			resurrect();
+	}
+
+	protected void resurrect()
+	{
+		m_HP = getStartHP();
+		GameObject respawnPoint = TDWorld.getWorld().getHeroRespawnPoint();
+		transform.position = respawnPoint.transform.position;
+		m_state = State.ePatrol;
+		renderer.enabled = true;
+		DestroyObject(m_cross);
 	}
 
 	enum State
@@ -194,7 +222,11 @@ public class TDHero : TDActor {
 		ePatrol       = 0,
 		eWalk         = 1,
 		eFight        = 2,
+		eDead         = 3,
 	}
 	State m_state;
 	public GameObject m_prefabFakeTarget;
+	public GameObject m_prefabCross;
+	float m_deathTime;
+	public GameObject m_cross;
 }

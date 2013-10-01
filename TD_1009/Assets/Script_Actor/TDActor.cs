@@ -12,6 +12,8 @@ public abstract class TDActor : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected virtual void Update () {
+		if (!isAlive())
+			return;
 		m_momentalSpeedFactor = 1.0f;
 		List<TDModifier> itemsToRemove = new List<TDModifier>();
 		foreach (TDModifier m in m_aModifier)
@@ -40,6 +42,11 @@ public abstract class TDActor : MonoBehaviour {
 
 		if (m_path != null)
 			walkByPath();
+	}
+
+	public virtual bool isAlive()
+	{
+		return true;
 	}
 
 	public abstract bool canFly();

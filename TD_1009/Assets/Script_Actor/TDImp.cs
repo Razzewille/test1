@@ -41,6 +41,6 @@ public class TDImp : TDEnemy {
 	}
 	protected override float physicalDamage()
 	{
-		return TDWorld.getWorld().m_configuration.enemyImpPhysicalDamage;
+		return TDWorld.getWorld().m_configuration.enemyImpPhysicalDamagePerSec;
 	}
 }

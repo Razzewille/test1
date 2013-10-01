@@ -424,7 +424,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1331393625}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: -21.6324501, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -440,6 +440,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_prefabFakeTarget: {fileID: 100000, guid: d977017a6400c4c49b52f2cf15dbafc4, type: 2}
+  m_prefabCross: {fileID: 100002, guid: ae2e3b8d6dc1c4449b4292f111cee223, type: 2}
+  m_cross: {fileID: 0}
 --- !u!1 &1435223710
 GameObject:
   m_ObjectHideFlags: 0

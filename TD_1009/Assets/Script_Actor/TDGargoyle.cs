@@ -41,6 +41,6 @@ public class TDGargoyle : TDEnemy {
 	}
 	protected override float physicalDamage()
 	{
-		return TDWorld.getWorld().m_configuration.enemyGargoylePhysicalDamage;
+		return TDWorld.getWorld().m_configuration.enemyGargoylePhysicalDamagePerSec;
 	}
 }

@@ -48,27 +48,34 @@ public abstract class TDEnemy : TDActor {
 	void runToPlayer()
 	{
 		TDWorld world = TDWorld.getWorld();
-		if (Time.time - m_timer > world.m_configuration.enemyRecalcPathTime)
+		if ((null == m_path) || (Time.time - m_timer > world.m_configuration.enemyRecalcPathTime))
 		{
 			GameObject player = world.getPlayer();
 			m_timer = Time.time;
 			hasPathTo(player);
 		}
 		TDHero hero = world.getTDHero();
-		if ((hero.transform.position - transform.position).magnitude < heroHostileRadius())
-		{
-			if (Random.value < heroHostileChance())
+		if (hero.isAlive())
+			if ((hero.transform.position - transform.position).magnitude < heroHostileRadius())
 			{
-				cleanPath();
-				m_state = State.eFightHero;
+				if (Random.value < heroHostileChance())
+				{
+					cleanPath();
+					m_state = State.eFightHero;
+				}
 			}
-		}
 	}
 
 	void fightHero()
 	{
 		TDWorld world = TDWorld.getWorld();
 		TDHero hero = world.getTDHero();
+		if (!hero.isAlive())
+		{
+			m_state = State.eRunToPlayer;
+			cleanPath();
+			return;
+		}
 		if ((hero.transform.position - transform.position).magnitude < fightRadius())
 		{
 			cleanPath();
@@ -151,7 +158,7 @@ public abstract class TDEnemy : TDActor {
 	enum State
 	{
 		eRunToPlayer     = 0,
-		eFightHero       = 2,
+		eFightHero       = 1
 	}
 	State m_state;
 
