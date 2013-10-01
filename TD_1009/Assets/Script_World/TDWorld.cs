@@ -107,6 +107,14 @@ public class TDWorld : MonoBehaviour {
 		return aHeros[0];
 	}
 
+	public GameObject getHeroRespawnPoint()
+	{
+		GameObject [] aPts = GameObject.FindGameObjectsWithTag("HeroRespawnPoint");
+		if (0 == aPts.Length)
+			return null;
+		return aPts[0];
+	}
+
 	public GameObject getTerrain()
 	{
 		GameObject [] aTerrains = GameObject.FindGameObjectsWithTag("Terrain");

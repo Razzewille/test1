@@ -6,6 +6,8 @@ public class TDHero : TDActor {
 	// Use this for initialization
 	protected override void Start () {
 		base.Start();
+		GameObject respawnPoint = TDWorld.getWorld().getHeroRespawnPoint();
+		transform.position = respawnPoint.transform.position;
 		m_state = State.ePatrol;
 		receiveModifier(new TDHealthRegeneration(10000.0f, TDWorld.getWorld().m_configuration.heroAutoHealPerSec));
 	}
